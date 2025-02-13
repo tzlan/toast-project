@@ -3,25 +3,28 @@ html, body {
     padding: 0;
     height: 100%;
     width: 100%;
+      
 }
+
+  
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 50rem;
+    height: 100vh;
     background: linear-gradient(135deg, var(--blue-main-page) 0%, var(--purple-main-page) 100%);
     font-family: 'Segoe UI', system-ui, sans-serif;
     padding: 2rem; 
 }
 
 .title {
-    margin-bottom: 3rem; /* to rem */
+    margin-bottom: 3rem; 
     font-size: 2.5rem;
     color: white;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-weight: 600;
-    letter-spacing: 0.7rem;
+    letter-spacing: 0.3rem;
     text-align: center;
 }
 
@@ -30,7 +33,7 @@ html, body {
     flex-direction: column;
     align-items: center; 
     width: 100%;
-    max-width: 30rem;
+    max-width: 35rem;
     padding: 3rem;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 2rem;
@@ -39,11 +42,9 @@ html, body {
     transition: transform 0.3s ease;
 }
 
-.form:hover {
-    transform: translateY(-3%);
-}
 
 .formGroup {
+    flex: 1; 
     margin-bottom: 2rem;
     position: relative;
     width: 100%; 
@@ -99,10 +100,23 @@ html, body {
 }
 
 .button:hover {
-    transform: translateY(2rem);
-    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+ 
+    box-shadow: 0 6px 15px rgba(65, 255, 2, 0.4);
 }
 
-.button:active {
-    transform: translateY(0);
-}u
+
+
+.eye {
+    position: absolute;
+    right: 0.5rem;
+    top: 69%;
+    width: 7%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+.formRow {
+    display: flex;
+    gap: 20px; /* Espace entre les champs */
+    width: 100%; /* Prend toute la largeur disponible */
+    margin-bottom: 1rem; /* Marge en bas pour l'espace entre les lignes */
+}

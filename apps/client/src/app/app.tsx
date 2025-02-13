@@ -1,11 +1,13 @@
 import { Login } from "../components";
+import { Routes, Route } from 'react-router-dom';
+import { User_registration } from "../components/user_registration/user_registration";  // ajoutez ce chemin selon votre structure
 
-export function App() {
+
+export default function App() {
   return (
-    <div>
-      <Login  />
-    </div>
+    <Routes>
+      <Route path="/" element={<Login />} />
+      <Route path="/user_registration" element={<User_registration />} />
+    </Routes>
   );
 }
-
-export default App;

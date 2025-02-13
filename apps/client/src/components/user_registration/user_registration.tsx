@@ -2,8 +2,10 @@
 import { useState } from 'react'
 import styles from './user_registration.module.css'
 
-const user_registration = () => {
+export const User_registration = () => {
   const [idSoldier, setIdSoldier] = useState('');
+  const [familyNameSoldier, setfamilyNameSoldier] = useState('');
+  const [nameSoldier, setnameSoldier] = useState('');
   const [password, setPassword] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
@@ -12,61 +14,83 @@ const user_registration = () => {
     e.preventDefault();
     console.log('Id soldier -- >', idSoldier);
     console.log('Password --> ', password);
+    console.log('Family Name -- >', familyNameSoldier);
+    console.log('Name --> ', nameSoldier);
     // next backend t'a capté
-  };
+  }; 
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>GOLDEN TOAST</h1>
+      <h1 className={styles.title}>Join the Toast Club</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
+        {/* Aligner Id Soldier et Password côte à côte */}
+        <div className={styles.formRow}>
+          <div className={styles.formGroup}>
+            <label htmlFor="Id Soldier" className={styles.label}>
+              Id Soldier
+            </label>
+            <input
+              type="number"
+              id="idSoldier"
+              value={idSoldier}
+              onChange={(e) => setIdSoldier(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.label}>
+             Name
+            </label>
+            <input
+              type="text"
+              id="nameSoldier"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+
+
+          
+        </div>
+
+   
         <div className={styles.formGroup}>
-          <label htmlFor="Id Soldier" className={styles.label}>
-            Id Soldier
+          <label htmlFor="familyNameSoldier" className={styles.label}>
+            Family Name
           </label>
           <input
-            type="id"
-            id="idSoldier"
-            value={idSoldier}
-            onChange={(e) => setIdSoldier(e.target.value)}
+            type="text"
+            id="familyNameSoldier"
+            value={familyNameSoldier}
+            onChange={(e) => setfamilyNameSoldier(e.target.value)}
             className={styles.input}
             required
           />
         </div>
 
-        <div className={styles.formGroup}>
+        
           <label htmlFor="password" className={styles.label}>
-            Password
+          Password
           </label>
-    
           <input
             type={showPassword ? 'text' : 'password'}
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            id="nameSoldier"
+            value={nameSoldier}
+            onChange={(e) => setnameSoldier(e.target.value)}
             className={styles.input}
             required
-            />   
-     
-
-        </div>
+          />
         
+
         <button type="submit" className={styles.button}>
-          Login
+          Join the toast club
         </button>
-
-
-      
-        <div className={styles.forgotPassword}>
-          <a href="/create-account">Create accogfdgfdunt</a>
-        </div>
-
-
       </form>
     </div>
   );
+
 };
-
-
-
-
-
