@@ -8,6 +8,7 @@ export default function App() {
     <Routes>
       <Route path="/" element={<Login />} />
       <Route path="/user_registration" element={<User_registration />} />
+      
     </Routes>
   );
 }

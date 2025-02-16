@@ -7,15 +7,11 @@ export const User_registration = () => {
   const [familyNameSoldier, setfamilyNameSoldier] = useState('');
   const [nameSoldier, setnameSoldier] = useState('');
   const [password, setPassword] = useState('');
-
-  const [showPassword, setShowPassword] = useState(false);
+  const [isPasswordShown, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Id soldier -- >', idSoldier);
-    console.log('Password --> ', password);
-    console.log('Family Name -- >', familyNameSoldier);
-    console.log('Name --> ', nameSoldier);
+
     // next backend t'a capté
   }; 
 
@@ -52,12 +48,7 @@ export const User_registration = () => {
               required
             />
           </div>
-
-
-          
         </div>
-
-   
         <div className={styles.formGroup}>
           <label htmlFor="familyNameSoldier" className={styles.label}>
             Family Name
@@ -77,7 +68,7 @@ export const User_registration = () => {
           Password
           </label>
           <input
-            type={showPassword ? 'text' : 'password'}
+            type={isPasswordShown ? 'text' : 'password'}
             id="nameSoldier"
             value={nameSoldier}
             onChange={(e) => setnameSoldier(e.target.value)}
