@@ -13,11 +13,9 @@ export const NewToast = () => {
 
   }; 
 
-  
-
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Program a new toast 🍷</h1>
+      <h1 className={styles.title}>Make a new toast 🍷</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
       
         <div className={styles.formRow}>

@@ -37,7 +37,7 @@ html, body {
     width: 100%;
     max-width: 50rem;
     padding: 3rem;
-    background: rgba(255, 255, 255, 0.95);
+    background: white;
     border-radius: 2rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(10px);
@@ -46,7 +46,6 @@ html, body {
 
 
 .formGroup {
-    flex: 1; 
     margin-bottom: 2rem;
     position: relative;
     width: 100%; 
@@ -118,7 +117,7 @@ html, body {
 }
 .formRow {
     display: flex;
-    gap: 20px; /* Espace entre les champs */
-    width: 100%; /* Prend toute la largeur disponible */
-    margin-bottom: 1rem; /* Marge en bas pour l'espace entre les lignes */
+    gap: 20px; 
+    width: 100%; 
+    margin-bottom: 1rem; 
 }

@@ -63,7 +63,6 @@ export const UserRegistration = () => {
           />
         </div>
 
-        
           <label htmlFor="password" className={styles.label}>
           Password
           </label>
