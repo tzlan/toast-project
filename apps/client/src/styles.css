@@ -2,3 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --blue-main-page: #001b92;
+    --purple-main-page: #3d0524;
+    --color-label-blue: #374151;
+
+}
