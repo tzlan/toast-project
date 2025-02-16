@@ -5,6 +5,8 @@ html, body {
     width: 100%;
       
 }
+
+  
 .container {
     display: flex;
     flex-direction: column;
@@ -15,6 +17,9 @@ html, body {
     font-family: 'Segoe UI', system-ui, sans-serif;
     padding: 2rem; 
 }
+
+
+
 .title {
     margin-bottom: 3rem; 
     font-size: 2.5rem;
@@ -24,12 +29,13 @@ html, body {
     letter-spacing: 0.3rem;
     text-align: center;
 }
+
 .form {
     display: flex;
     flex-direction: column;
     align-items: center; 
     width: 100%;
-    max-width: 35rem;
+    max-width: 50rem;
     padding: 3rem;
     background: rgba(255, 255, 255, 0.95);
     border-radius: 2rem;
@@ -40,6 +46,7 @@ html, body {
 
 
 .formGroup {
+    flex: 1; 
     margin-bottom: 2rem;
     position: relative;
     width: 100%; 
@@ -95,13 +102,11 @@ html, body {
 }
 
 .button:hover {
-    transform: translateY(2rem);
-    box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+ 
+    box-shadow: 0 6px 15px rgba(65, 255, 2, 0.4);
 }
 
-.button:active {
-    transform: translateY(0);
-}
+
 
 .eye {
     position: absolute;
@@ -110,4 +115,10 @@ html, body {
     width: 7%;
     transform: translateY(-50%);
     cursor: pointer;
+}
+.formRow {
+    display: flex;
+    gap: 20px; /* Espace entre les champs */
+    width: 100%; /* Prend toute la largeur disponible */
+    margin-bottom: 1rem; /* Marge en bas pour l'espace entre les lignes */
 }
