@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import styles from './user_registration.module.css'
 
-export const User_registration = () => {
+export const UserRegistration = () => {
   const [idSoldier, setIdSoldier] = useState('');
   const [familyNameSoldier, setfamilyNameSoldier] = useState('');
   const [nameSoldier, setnameSoldier] = useState('');
@@ -63,7 +63,6 @@ export const User_registration = () => {
           />
         </div>
 
-        
           <label htmlFor="password" className={styles.label}>
           Password
           </label>
