@@ -1,8 +1,7 @@
-
 import { useState } from 'react'
-import styles from './user_registration.module.css'
+import styles from './admin-edit-user.module.css';
 
-export const UserRegistration = () => {
+export const AdminEditUser = () => {
   const [idSoldier, setIdSoldier] = useState('');
   const [familyNameSoldier, setfamilyNameSoldier] = useState('');
   const [nameSoldier, setnameSoldier] = useState('');

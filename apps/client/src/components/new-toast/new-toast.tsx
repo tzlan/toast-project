@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import styles from './new_toast.module.css'
+import styles from './new-toast.module.css'
 
 export const NewToast = () => {
   const [idSoldier, setIdSoldier] = useState('');
