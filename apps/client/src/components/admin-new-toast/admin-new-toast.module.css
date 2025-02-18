@@ -57,7 +57,7 @@ html, body {
     width: 100%;
     padding: 1rem 2rem;
     font-size: 1rem;
-    color: #1f2937;
+    color: var(--imput-backgound);
     background-color: #f9fafb;
     border: 2px solid #e5e7eb;
     border-radius: 2rem;
@@ -67,7 +67,7 @@ html, body {
 }
 
 .input:focus {
-    border-color: var(--blue-main-page) 0%;
+    border-color: var(--blue-main-page) ;
     background-color: white;
     
 }
@@ -91,14 +91,7 @@ html, body {
     width: 90%; 
 }
 
-.eye {
-    position: absolute;
-    right: 0.5rem;
-    top: 69%;
-    width: 7%;
-    transform: translateY(-50%);
-    cursor: pointer;
-}
+
 .formRow {
     display: flex;
     gap: 5%; 
@@ -106,11 +99,3 @@ html, body {
     margin-bottom: 1rem; 
 }
 
-.formImputDescription {
-    width: 100%;
-    padding: 2rem 1rem; 
-    color: black;
-    background-color: white;
-    border: 0.15rem solid gray;
-    border-radius: 2rem;
-}
