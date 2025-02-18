@@ -1,11 +1,7 @@
 html, body {
-    margin: 0;
-    padding: 0;
     height: 100%;
-    width: 100%;
-      
+    width: 100%; 
 }
-
   
 .container {
     display: flex;
@@ -18,13 +14,10 @@ html, body {
     padding: 2rem; 
 }
 
-
-
 .title {
     margin-bottom: 3rem; 
     font-size: 2.5rem;
-    color: white;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: white; 
     font-weight: 600;
     letter-spacing: 0.3rem;
     text-align: center;
@@ -39,8 +32,6 @@ html, body {
     padding: 3rem;
     background: white;
     border-radius: 2rem;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
     transition: transform 0.3s ease;
 }
 
@@ -64,7 +55,7 @@ html, body {
 
 .input {
     width: 100%;
-    padding: 12px 16px;
+    padding: 1rem 2rem;
     font-size: 1rem;
     color: #1f2937;
     background-color: #f9fafb;
@@ -100,13 +91,6 @@ html, body {
     width: 90%; 
 }
 
-.button:hover {
- 
-    box-shadow: 0 6px 15px rgba(65, 255, 2, 0.4);
-}
-
-
-
 .eye {
     position: absolute;
     right: 0.5rem;
@@ -117,7 +101,16 @@ html, body {
 }
 .formRow {
     display: flex;
-    gap: 20px; 
+    gap: 5%; 
     width: 100%; 
     margin-bottom: 1rem; 
+}
+
+.formImputDescription {
+    width: 100%;
+    padding: 2rem 1rem; 
+    color: black;
+    background-color: white;
+    border: 0.15rem solid gray;
+    border-radius: 2rem;
 }

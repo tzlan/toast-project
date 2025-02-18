@@ -7,17 +7,17 @@ export const AdminNewToast = () => {
   const [familyNameSoldier, setfamilyNameSoldier] = useState('');
   const [nameSoldier, setnameSoldier] = useState('');
   const [hourToast, setHourToast] = useState('');
+  const [descriptionToast, setDescriptionToast] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
+    console.log('description', descriptionToast);
   }; 
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Welcom Admin ! Make a new toast 🍷</h1>
+      <h1 className={styles.title}>Welcome Admin ! Make a new toast 🍷</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
-      
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
             <label htmlFor="Id Soldier" className={styles.label}>
@@ -90,7 +90,21 @@ export const AdminNewToast = () => {
             className={styles.input}
             required
           />
-        </div>        
+        </div>      
+
+         <div className={styles.formGroup}>
+          <label htmlFor="description" className={styles.label}>
+            Description
+          </label>
+          <input 
+            type="text"
+            id="description"
+            value={descriptionToast}
+            onChange={(e) => setDescriptionToast(e.target.value)}
+            className={styles.formImputDescription}
+            required
+          />
+        </div>     
 
         <button type="submit" className={styles.button}>
          New toaaaaaast 🥳
