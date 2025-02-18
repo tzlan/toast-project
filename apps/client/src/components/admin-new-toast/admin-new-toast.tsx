@@ -10,14 +10,12 @@ export const AdminNewToast = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
   }; 
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Welcom Admin ! Make a new toast 🍷</h1>
+      <h1 className={styles.title}>Welcome Admin ! Make a new toast 🍷</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
-      
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
             <label htmlFor="Id Soldier" className={styles.label}>
