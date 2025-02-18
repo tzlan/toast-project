@@ -105,3 +105,12 @@ html, body {
     width: 100%; 
     margin-bottom: 1rem; 
 }
+
+.formImputDescription {
+    width: 100%;
+    padding: 2rem 1rem; 
+    color: black;
+    background-color: white;
+    border: 0.15rem solid gray;
+    border-radius: 2rem;
+}

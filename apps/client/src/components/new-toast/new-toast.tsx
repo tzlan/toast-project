@@ -7,7 +7,7 @@ export const NewToast = () => {
   const [descriptionToast, setDescriptionToast] = useState('');
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-   console.log('nique LFI');
+   
     
   }; 
 
@@ -51,7 +51,7 @@ export const NewToast = () => {
 
 
         <div className={styles.formGroup}>
-          <label htmlFor="familyNameSoldier" className={styles.label}>
+          <label htmlFor="description" className={styles.label}>
             Description
           </label>
           <input 

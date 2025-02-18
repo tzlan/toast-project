@@ -7,9 +7,11 @@ export const AdminNewToast = () => {
   const [familyNameSoldier, setfamilyNameSoldier] = useState('');
   const [nameSoldier, setnameSoldier] = useState('');
   const [hourToast, setHourToast] = useState('');
+  const [descriptionToast, setDescriptionToast] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('description', descriptionToast);
   }; 
 
   return (
@@ -88,7 +90,21 @@ export const AdminNewToast = () => {
             className={styles.input}
             required
           />
-        </div>        
+        </div>      
+
+         <div className={styles.formGroup}>
+          <label htmlFor="description" className={styles.label}>
+            Description
+          </label>
+          <input 
+            type="text"
+            id="description"
+            value={descriptionToast}
+            onChange={(e) => setDescriptionToast(e.target.value)}
+            className={styles.formImputDescription}
+            required
+          />
+        </div>     
 
         <button type="submit" className={styles.button}>
          New toaaaaaast 🥳
