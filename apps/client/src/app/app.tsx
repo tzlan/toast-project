@@ -1,9 +1,6 @@
 import { AdminEditUser, Login ,NotFound , UserRegistration , NewToast} from "../components";
 import { Routes, Route } from 'react-router-dom';
 
-
-
-
 export const App = () => {
   return (
     <Routes>
