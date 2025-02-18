@@ -1,0 +1,20 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+      
+}
+
+  
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 60rem;
+    background: linear-gradient(135deg, var(--blue-main-page) 0%, var(--purple-main-page) 100%);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    padding: 2rem; 
+}
+
