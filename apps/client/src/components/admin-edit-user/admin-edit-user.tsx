@@ -1,28 +1,30 @@
 import { useState } from 'react'
 import styles from './admin-edit-user.module.css';
-
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 export const AdminEditUser = () => {
   const [idSoldier, setIdSoldier] = useState('');
   const [familyNameSoldier, setfamilyNameSoldier] = useState('');
-  const [nameSoldier, setnameSoldier] = useState('');
+  const [personalName, setpersonalName] = useState('');
   const [password, setPassword] = useState('');
-  const [isPasswordShown, setShowPassword] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // next backend t'a capté
+ 
+    console
   }; 
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  }
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Join the Toast Club</h1>
+      <h1 className={styles.title}>Edit user ✍🏼</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
-        {/* Aligner Id Soldier et Password côte à côte */}
-        <div className={styles.formRow}>
-          <div className={styles.formGroup}>
+   
+      <div className={styles.formGroup}>
             <label htmlFor="Id Soldier" className={styles.label}>
-              Id Soldier
+            Soldier Id
             </label>
             <input
               type="number"
@@ -34,21 +36,9 @@ export const AdminEditUser = () => {
             />
           </div>
 
+        <div className={styles.formRow}>
+        
           <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>
-             Name
-            </label>
-            <input
-              type="text"
-              id="nameSoldier"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-        </div>
-        <div className={styles.formGroup}>
           <label htmlFor="familyNameSoldier" className={styles.label}>
             Family Name
           </label>
@@ -62,21 +52,52 @@ export const AdminEditUser = () => {
           />
         </div>
 
+          <div className={styles.formGroup}>
+            <label htmlFor="password" className={styles.label}>
+             Personal Name
+            </label>
+            <input
+              type="text"
+              id="nameSoldier"
+              value={personalName}
+              onChange={(e) => setpersonalName(e.target.value)}
+              className={styles.input}
+              required
+            />
+          </div>
+        </div>
+
+       
+
+
+        <div className={styles.formGroup}>
           <label htmlFor="password" className={styles.label}>
-          Password
+            Password
           </label>
           <input
-            type={isPasswordShown ? 'text' : 'password'}
-            id="nameSoldier"
-            value={nameSoldier}
-            onChange={(e) => setnameSoldier(e.target.value)}
+            type={showPassword ? 'text' : 'password'}
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
             required
           />
-        
+          <span className={styles.eye} onClick={togglePasswordVisibility}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </span>
+        </div>
+
+        <div className={styles.buttonGroup}>
+            <button className={`${styles.buttonAdmin} ${styles.buttonRed}`}> Persona</button>
+            <button className={`${styles.buttonAdmin} ${styles.buttonYellow}`}>Criminal</button>
+            <button className={`${styles.buttonAdmin} ${styles.buttonGreen}`}>Legit</button>
+            <button className={`${styles.buttonAdmin} ${styles.buttonOrange}`}>Admin</button>
+            
+        </div>
+    
 
         <button type="submit" className={styles.button}>
-          Join the toast club
+           Update
         </button>
       </form>
     </div>

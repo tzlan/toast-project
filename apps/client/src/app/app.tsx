@@ -1,9 +1,8 @@
-import { Login } from "../components";
+import { AdminEditUser, Login ,NotFound , UserRegistration , NewToast} from "../components";
 import { Routes, Route } from 'react-router-dom';
-import { UserRegistration } from "../components/user-registration/user-registration"; 
-import { NewToast } from "../components/new-toast/new-toast";
-import {NotFound} from "../components/not-found/not-found";
-import {AdminEditUser} from "../components/admin-edit-user/admin-edit-user";
+
+
+
 
 export const App = () => {
   return (
