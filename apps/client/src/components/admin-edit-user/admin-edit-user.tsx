@@ -9,9 +9,6 @@ export const AdminEditUser = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
- 
-    console
   }; 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -88,14 +85,13 @@ export const AdminEditUser = () => {
         </div>
 
         <div className={styles.buttonGroup}>
-            <button className={`${styles.buttonAdmin} ${styles.buttonRed}`}> Persona</button>
+            <button className={`${styles.buttonAdmin} ${styles.buttonRed}`}>Persona</button>
             <button className={`${styles.buttonAdmin} ${styles.buttonYellow}`}>Criminal</button>
-            <button className={`${styles.buttonAdmin} ${styles.buttonGreen}`}>Legit</button>
+            <button className={`${styles.buttonAdmin} ${styles.buttonGreen}`}>Perfect</button>
             <button className={`${styles.buttonAdmin} ${styles.buttonOrange}`}>Admin</button>
             
         </div>
     
-
         <button type="submit" className={styles.button}>
            Update
         </button>
