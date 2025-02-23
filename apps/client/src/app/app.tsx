@@ -1,6 +1,14 @@
-import { AdminEditUser, AdminNewToast, Login ,NotFound , UserRegistration } from "../components";
+import { 
+  AdminEditUser, 
+  AdminNewToast, 
+  Login,
+  NotFound,
+  UserRegistration,
+  PrincipalDashboard } from "../components";
+  
 import { Routes, Route } from 'react-router-dom';
 import { NewToast } from "../components/new-toast";
+
 
 export const App = () => {
   return (
@@ -9,6 +17,8 @@ export const App = () => {
       
       <Route path="/admin-new-toast" element={<AdminNewToast />} />
       <Route path="/admin-edit-user" element={<AdminEditUser/>}/>
+
+      <Route path="/principal-dashboard" element={<PrincipalDashboard/>}/>
 
       <Route path="/user-registration" element={<UserRegistration />} />
       <Route path="/new-toast" element={<NewToast />} />
