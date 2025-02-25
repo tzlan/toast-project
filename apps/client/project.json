@@ -1,0 +1,23 @@
+{
+  "name": "client",
+  "sourceRoot": "apps/client/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/vite:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "root": "apps/client",
+        "configFile": "apps/client/vite.config.ts",
+        "outputPath": "dist/apps/client"
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "options": {
+        "root": "apps/client",
+        "configFile": "apps/client/vite.config.ts"
+      }
+    }
+  }
+}
