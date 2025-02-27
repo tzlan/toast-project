@@ -3,7 +3,7 @@ import {
   AdminNewToast,
   Login,
   NotFound,
-  PrincipalDashboard,
+  RecordPage,
   UserRegistration,
 } from '../components';
 
@@ -21,7 +21,7 @@ export const App = () => {
       <Route path="/user-registration" element={<UserRegistration />} />
       <Route path="/new-toast" element={<NewToast />} />
       <Route path="/edit-user" element={<AdminEditUser />} />
-      <Route path="/principal-dashboard" element={<PrincipalDashboard />} />
+      <Route path="/record-page" element={<RecordPage />} />
 
       <Route path="*" element={<NotFound />} />
     </Routes>
