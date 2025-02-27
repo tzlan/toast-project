@@ -1,31 +1,19 @@
 // Importation des modules nécessaires
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
-import styles from './login.module.css'; 
+import styles from './login.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
-
 export const Login = () => {
-
   const [idSoldier, setIdSoldier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log('Id soldier -- >', idSoldier);
-    console.log('Password -->', password);
-   
-  };
-
+  const handleSubmit = (e: React.FormEvent) => {};
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
-  }
-
-
+  };
 
   return (
     <div className={styles.container}>
@@ -33,7 +21,7 @@ export const Login = () => {
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.formGroup}>
           <label htmlFor="idSoldier" className={styles.label}>
-            Id Soldier
+            Soldier Id
           </label>
           <input
             type="text" // Correction du type d'entrée
@@ -61,15 +49,14 @@ export const Login = () => {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </span>
         </div>
-        
+
         <button type="submit" className={styles.button}>
           Login
         </button>
-      
+
         <div className={styles.forgotPassword}>
           <Link to="/user-registration">Create account</Link>
         </div>
-        
       </form>
     </div>
   );
