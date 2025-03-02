@@ -35,7 +35,7 @@ export const RecordPage = () => {
           <thead>
             <tr>
               <th>Person</th>
-              <th>Record</th>
+              <th>Score</th>
             </tr>
           </thead>
           <tbody>

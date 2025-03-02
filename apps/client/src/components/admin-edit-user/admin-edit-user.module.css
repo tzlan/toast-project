@@ -54,7 +54,7 @@ body {
   display: block;
   margin-bottom: 1rem;
   font-size: 1rem;
-  color: #374151;
+  color: var(--labels-color);
   font-weight: 500;
   transition: color 0.3s ease;
   width: 100%;
@@ -62,11 +62,11 @@ body {
 
 .input {
   width: 100%;
-  padding: 12px 16px;
+  padding: 1rem 3rem;
   font-size: 1rem;
-  color: #1f2937;
-  background-color: #f9fafb;
-  border: 2px solid #e5e7eb;
+  color: black;
+  background-color: var(--white-for-imput);
+  border: 2px solid var(--gray-for-circle-input);
   border-radius: 2rem;
   transition: all 0.9s ease;
   outline: none;
@@ -74,7 +74,7 @@ body {
 }
 
 .input:focus {
-  border-color: var(--blue-main-page) 0%;
+  border-color: var(--gray-for-tab);
   background-color: white;
 }
 
@@ -101,7 +101,7 @@ body {
 }
 
 .button:hover {
-  box-shadow: 0 6px 15px rgba(65, 255, 2, 0.4);
+  box-shadow: 0 1rem 2rem var(--white-for-button);
 }
 
 .eye {
