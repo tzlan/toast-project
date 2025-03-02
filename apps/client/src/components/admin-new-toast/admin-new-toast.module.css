@@ -1,101 +1,111 @@
-html, body {
-    height: 100%;
-    width: 100%; 
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 1000%;
 }
-  
+
 .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(135deg, var(--blue-main-page) 0%, var(--purple-main-page) 100%);
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    padding: 2rem; 
+  min-height: 100vh;
+  justify-content: flex-start;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60rem;
+  background: linear-gradient(
+    135deg,
+    var(--blue-main-page),
+    var(--purple-main-page)
+  );
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  padding: 15rem;
 }
 
 .title {
-    margin-bottom: 3rem; 
-    font-size: 2.5rem;
-    color: white; 
-    font-weight: 600;
-    letter-spacing: 0.3rem;
-    text-align: center;
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.3rem;
+  text-align: center;
 }
+
 
 .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    width: 100%;
-    max-width: 50rem;
-    padding: 3rem;
-    background: white;
-    border-radius: 2rem;
-    transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  height: 1;
+  max-width: 60rem;
+  padding: 3rem;
+  background: white;
+  border-radius: 2rem;
+  transition: transform 0.3s ease;
 }
 
-
 .formGroup {
-    margin-bottom: 2rem;
-    position: relative;
-    width: 100%; 
+  margin-bottom: 0.4rem;
+  position: relative;
+  width: 100%;
 }
 
 .label {
-    display: block;
-    margin-bottom: 1rem;
-    font-size: 1rem;
-    color: #374151;
-    font-weight: 500;
-    transition: color 0.3s ease;
-    width: 100%; 
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #374151;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  width: 100%;
 }
 
-
 .input {
-    width: 100%;
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    color: var(--imput-backgound);
-    background-color: #f9fafb;
-    border: 2px solid #e5e7eb;
-    border-radius: 2rem;
-    transition: all 0.9s ease;
-    outline: none;
-    box-sizing: border-box; /* inclure padding dans la largeur */
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  color: var(--imput-backgound);
+  background-color: #f9fafb;
+  border: 2px solid #e5e7eb;
+  border-radius: 2rem;
+  transition: all 0.9s ease;
+  outline: none;
+  box-sizing: border-box; /* inclure padding dans la largeur */
 }
 
 .input:focus {
-    border-color: var(--blue-main-page) ;
-    background-color: white;
-    
+  border-color: var(--blue-main-page);
+  background-color: white;
 }
 
 .input:hover {
-    background-color: white;
+  background-color: white;
 }
-
 
 .button {
-    padding: 1rem 2rem;
-    font-size: 1rem;
-    font-weight: 600;
-    color: white;
-    background: linear-gradient(135deg, var(--purple-main-page) 0%, var(--blue-main-page) 100%);
-    border: none;
-    border-radius: 2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-    width: 90%; 
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(
+    135deg,
+    var(--purple-main-page) 0%,
+    var(--blue-main-page) 100%
+  );
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  width: 90%;
 }
-
 
 .formRow {
-    display: flex;
-    gap: 5%; 
-    width: 100%; 
-    margin-bottom: 1rem; 
+  display: flex;
+  gap: 5%;
+  width: 100%;
+  margin-bottom: 1rem;
 }
-

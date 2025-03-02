@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import styles from './admin-new-toast.module.css'
+import { useState } from 'react';
+import styles from './admin-new-toast.module.css';
 
 export const AdminNewToast = () => {
   const [idSoldier, setIdSoldier] = useState('');
@@ -11,8 +11,7 @@ export const AdminNewToast = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-  }; 
+  };
 
   return (
     <div className={styles.container}>
@@ -21,7 +20,7 @@ export const AdminNewToast = () => {
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
             <label htmlFor="Id Soldier" className={styles.label}>
-              Id Soldier
+              Soldier Id
             </label>
             <input
               type="number"
@@ -35,7 +34,7 @@ export const AdminNewToast = () => {
 
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>
-             Name
+              Name
             </label>
             <input
               type="text"
@@ -65,7 +64,7 @@ export const AdminNewToast = () => {
 
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>
-             Date
+              Date
             </label>
             <input
               type="date"
@@ -90,7 +89,7 @@ export const AdminNewToast = () => {
             className={styles.input}
             required
           />
-        </div>      
+        </div>
 
         <div className={styles.formGroup}>
           <label htmlFor="familyNameSoldier" className={styles.label}>
@@ -104,16 +103,12 @@ export const AdminNewToast = () => {
             className={styles.input}
             required
           />
-        </div>  
-
-     
-
+        </div>
 
         <button type="submit" className={styles.button}>
-         New toaaaaaast 🥳
+          New toaaaaaast 🥳
         </button>
       </form>
     </div>
   );
-
 };
