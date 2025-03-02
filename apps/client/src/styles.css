@@ -3,9 +3,14 @@
 @tailwind utilities;
 /* You can add global styles to this file, and also import other style files */
 :root {
-    --blue-main-page: #001b92;
-    --purple-main-page: #3d0524;
-    --color-label-blue: #374151;
-    --imput-backgound:#1f2937;
-    --gray-for-tab:#2e322e;
+  --blue-main-page: #001b92;
+  --purple-main-page: #3d0524;
+  --color-label-blue: #374151;
+  --imput-backgound: #1f2937;
+  --gray-for-tab: #2e322e;
+  --labels-color: #374151;
+  --white-for-imput: #f9fafb;
+  --gray-for-circle-input: #e5e7eb;
+  --white-for-button: #c4c7ca;
+  --gray-for-cellules-tab: #2e322e;
 }

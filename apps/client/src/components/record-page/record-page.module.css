@@ -53,10 +53,10 @@ body {
 .tab td {
   padding: 1rem 1rem;
   font-size: 1rem;
-  color: #ffffff;
-  border: 0rem solid gray;
+  color: white;
+  border: 0rem solid;
   text-align: center;
-  background: rgb(33, 29, 29);
+  background: var(--gray-for-cellules-tab);
   border-radius: 0.5rem; /* Coins arrondis */
 }
 
@@ -101,7 +101,6 @@ body {
 }
 
 .stat-box:hover {
-  /*for the animation*/
   box-shadow: 0 0 1rem white;
   transform: translateY(-5%);
 }
