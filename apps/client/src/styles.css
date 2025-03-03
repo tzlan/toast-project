@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* You can add global styles to this file, and also import other style files */
+
 :root {
   --blue-main-page: #001b92;
   --purple-main-page: #3d0524;
@@ -13,4 +13,5 @@
   --gray-for-circle-input: #e5e7eb;
   --white-for-button: #c4c7ca;
   --gray-for-cellules-tab: #2e322e;
+  --yellow-for-button-status: #e3c900;
 }

@@ -1,28 +1,30 @@
-import { useState } from 'react'
-import styles from './new-toast.module.css'
+import { useState } from 'react';
+import styles from './new-toast.module.css';
 
 export const NewToast = () => {
+
   const [dateToast, setdateToast] = useState('');
   const [hourToast, setHourToast] = useState('');
   const [descriptionToast, setDescriptionToast] = useState('');
+ 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-   
-    
-  }; 
+  };
+
+
+
+  
 
   return (
+
+    
     <div className={styles.container}>
       <h1 className={styles.title}>Make a new toast 🍷</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
-      
-       
-
         <div className={styles.formRow}>
-          
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>
-             Date
+              Date
             </label>
             <input
               type="date"
@@ -48,13 +50,13 @@ export const NewToast = () => {
             required
           />
         </div>
-
+       
 
         <div className={styles.formGroup}>
           <label htmlFor="description" className={styles.label}>
             Description
           </label>
-          <input 
+          <input
             type="text"
             id="description"
             value={descriptionToast}
@@ -62,13 +64,12 @@ export const NewToast = () => {
             className={styles.formImputDescription}
             required
           />
-        </div>            
+        </div>
 
         <button type="submit" className={styles.button}>
-         New toaaaaaast 🥳
+          New toaaaaaast 🥳
         </button>
       </form>
     </div>
   );
-
 };
