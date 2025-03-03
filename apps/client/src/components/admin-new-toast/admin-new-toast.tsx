@@ -4,64 +4,48 @@ import styles from './admin-new-toast.module.css';
 export const AdminNewToast = () => {
   const [idSoldier, setIdSoldier] = useState('');
   const [dateToast, setdateToast] = useState('');
-  const [familyNameSoldier, setfamilyNameSoldier] = useState('');
-  const [nameSoldier, setnameSoldier] = useState('');
   const [hourToast, setHourToast] = useState('');
   const [descriptionToast, setDescriptionToast] = useState('');
-
+  const [selectedOption, setSelectedOption] = useState('');
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+  };
+
+  const users = [
+    { value: '1', label: 'Tomer' },
+    { value: '2', label: 'Nadav' },
+    { value: '3', label: 'Shaun' },
+    { value: '4', label: 'Aurel' },
+    { value: '5', label: 'Inbar' },
+    { value: '6', label: 'Ethan' },
+    { value: '6', label: 'Bohad' },
+  ];
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedOption(event.target.value);
+    console.log(selectedOption);
   };
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Welcome Admin ! Make a new toast 🍷</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
-        <div className={styles.formRow}>
-          <div className={styles.formGroup}>
-            <label htmlFor="Id Soldier" className={styles.label}>
-              Soldier Id
-            </label>
-            <input
-              type="number"
-              id="idSoldier"
-              value={idSoldier}
-              onChange={(e) => setIdSoldier(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>
-              Name
-            </label>
-            <input
-              type="text"
-              id="nameSoldier"
-              value={nameSoldier}
-              onChange={(e) => setnameSoldier(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-        </div>
+        <label className={styles.label}>Soldier</label>
+        <select
+          value={selectedOption}
+          onChange={handleSelectChange}
+          className={styles.select}
+        >
+          <option value="" disabled>
+            Soldier name
+          </option>
+          {users.map((user) => (
+            <option key={user.value} value={user.value}>
+              {user.label}
+            </option>
+          ))}
+        </select>
 
         <div className={styles.formRow}>
-          <div className={styles.formGroup}>
-            <label htmlFor="Id Soldier" className={styles.label}>
-              Family name
-            </label>
-            <input
-              type="text"
-              id="familyNameSoldier"
-              value={familyNameSoldier}
-              onChange={(e) => setfamilyNameSoldier(e.target.value)}
-              className={styles.input}
-              required
-            />
-          </div>
-
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>
               Date

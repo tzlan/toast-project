@@ -1,5 +1,7 @@
 html,
 body {
+  margin: 0;
+  padding: 0;
   height: 100%;
   width: 100%;
 }
@@ -39,7 +41,6 @@ body {
   padding: 3rem;
   background: white;
   border-radius: 2rem;
-
   backdrop-filter: blur(10px);
   transition: transform 0.3s ease;
 }
@@ -112,6 +113,7 @@ body {
   transform: translateY(-50%);
   cursor: pointer;
 }
+
 .formRow {
   display: flex;
   gap: 5%;
@@ -120,30 +122,32 @@ body {
 }
 
 .buttonAdmin {
-  border-radius: 50rem;
-  padding: 0.5rem 1rem;
-  margin: 1rem;
-  border: none;
-  cursor: pointer;
+  padding: 1rem 2rem;
   font-size: 1rem;
+  font-weight: 600;
+  margin: 1rem;
+  color: white;
+  border: none;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.buttonGray {
+  background: gray;
+  color: white;
+  opacity: 0.7;
+  cursor: pointer;
 }
 
 .buttonRed {
-  background-color: red;
-  color: white;
-}
-
-.buttonGreen {
-  background-color: green;
-  color: white;
-}
-
-.buttonOrange {
-  background-color: orange;
-  color: white;
+  background: red;
 }
 
 .buttonYellow {
-  background-color: yellow;
-  color: black;
+  background: var(--yellow-for-button-status);
+}
+
+.buttonOrange {
+  background: orange;
 }

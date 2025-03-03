@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 1000%;
+  width: 100%;
 }
 
 .container {
@@ -72,7 +72,7 @@ body {
   border-radius: 2rem;
   transition: all 0.9s ease;
   outline: none;
-  box-sizing: border-box; /* inclure padding dans la largeur */
+  box-sizing: border-box;
 }
 
 .input:focus {
@@ -106,5 +106,45 @@ body {
   display: flex;
   gap: 5%;
   width: 100%;
-  margin-bottom: 1rem;
+  margin-bottom: 0rem;
+}
+
+@media (max-width: 20rem) {
+  .form {
+    width: 90%;
+    padding: 1.5rem;
+    max-width: none;
+  }
+
+  .formRow {
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .input,
+  .button {
+    width: 100%;
+  }
+
+  .title {
+    font-size: 5rem;
+    letter-spacing: 0.2rem;
+  }
+  .container {
+    padding: 2rem;
+  }
+}
+
+.select {
+  width: 100%;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  color: var(--imput-backgound);
+  background-color: var(--white-for-imput);
+  border: 2px solid var(--white-for-button);
+  border-radius: 2rem;
+  transition: all 0.9s ease;
+  outline: none;
+  box-sizing: border-box;
+  margin: 1rem;
 }
