@@ -2,7 +2,6 @@ import { useState } from 'react';
 import styles from './admin-new-toast.module.css';
 
 export const AdminNewToast = () => {
-  const [idSoldier, setIdSoldier] = useState('');
   const [dateToast, setdateToast] = useState('');
   const [hourToast, setHourToast] = useState('');
   const [descriptionToast, setDescriptionToast] = useState('');
@@ -22,7 +21,6 @@ export const AdminNewToast = () => {
   ];
   const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedOption(event.target.value);
-    console.log(selectedOption);
   };
 
   return (
@@ -30,6 +28,7 @@ export const AdminNewToast = () => {
       <h1 className={styles.title}>Welcome Admin ! Make a new toast 🍷</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
         <label className={styles.label}>Soldier</label>
+
         <select
           value={selectedOption}
           onChange={handleSelectChange}
@@ -38,6 +37,7 @@ export const AdminNewToast = () => {
           <option value="" disabled>
             Soldier name
           </option>
+
           {users.map((user) => (
             <option key={user.value} value={user.value}>
               {user.label}
@@ -60,7 +60,6 @@ export const AdminNewToast = () => {
             />
           </div>
         </div>
-
         <div className={styles.formGroup}>
           <label htmlFor="familyNameSoldier" className={styles.label}>
             Description
@@ -74,7 +73,6 @@ export const AdminNewToast = () => {
             required
           />
         </div>
-
         <div className={styles.formGroup}>
           <label htmlFor="familyNameSoldier" className={styles.label}>
             Hour
@@ -88,7 +86,6 @@ export const AdminNewToast = () => {
             required
           />
         </div>
-
         <button type="submit" className={styles.button}>
           New toaaaaaast 🥳
         </button>

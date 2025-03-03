@@ -35,7 +35,7 @@ body {
   width: 100%;
   max-width: 50rem;
   padding: 3rem;
-  background: white;
+  background: var(--white-for-imput);
   border-radius: 2rem;
   transition: transform 0.3s ease;
 }
@@ -50,7 +50,7 @@ body {
   display: block;
   margin-bottom: 0.5rem;
   font-size: 1rem;
-  color: gray;
+  color: var(--gray-for-tab);
   font-weight: 500;
   transition: color 0.3s ease;
   width: 100%;
@@ -61,8 +61,8 @@ body {
   padding: 1rem 2rem;
   font-size: 1rem;
   color: black;
-  background-color: white;
-  border: 2px solid gray;
+  background-color: var(--white-for-imput);
+  border: 2px solid var(--gray-for-tab);
   border-radius: 2rem;
   transition: all 0.9s ease;
   outline: none;
@@ -75,14 +75,14 @@ body {
 }
 
 .input:hover {
-  background-color: white;
+  background-color: var(--white-for-imput);
 }
 
 .button {
   padding: 1rem 2rem;
   font-size: 1rem;
   font-weight: 600;
-  color: white;
+  color: var(--white-for-imput);
   background: linear-gradient(
     135deg,
     var(--purple-main-page) 0%,
@@ -108,13 +108,11 @@ body {
   display: flex;
   gap: 5%;
   width: 100%;
-  margin-bottom: 0rem;
 }
 .formImputDescription {
   width: 100%;
   padding: 2rem 1rem;
-  color: black;
-  background-color: white;
+  background-color: var(--white-for-imput);
   border: 0.15rem solid gray;
   border-radius: 2rem;
 }
