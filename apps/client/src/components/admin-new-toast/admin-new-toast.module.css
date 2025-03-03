@@ -127,10 +127,9 @@ body {
   }
 
   .title {
-    font-size: clamp(1.5rem, 5vw, 2.5rem);
+    font-size: 5rem;
     letter-spacing: 0.2rem;
   }
-
   .container {
     padding: 2rem;
   }
