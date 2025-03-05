@@ -10,6 +10,9 @@
       "path": "./apps/server-e2e"
     },
     {
+      "@/*": ["./src/*"]
+    },
+    {
       "path": "./apps/server"
     }
   ]

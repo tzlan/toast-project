@@ -126,7 +126,7 @@ body {
   font-size: 1rem;
   font-weight: 600;
   margin: 1rem;
-  color: white;
+  color: var(--white-all);
   border: none;
   border-radius: 2rem;
   cursor: pointer;
@@ -134,8 +134,8 @@ body {
 }
 
 .buttonGray {
-  background: gray;
-  color: white;
+  background: var(--yellow-for-button-status);
+  color: var(--white-for-imput);
   opacity: 0.7;
   cursor: pointer;
 }
