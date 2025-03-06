@@ -1,6 +1,5 @@
-
-import { useState } from 'react'
-import styles from './user-registration.module.css'
+import { useState } from 'react';
+import styles from './user-registration.module.css';
 
 export const UserRegistration = () => {
   const [idSoldier, setIdSoldier] = useState('');
@@ -11,9 +10,7 @@ export const UserRegistration = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    // next backend t'a capté
-  }; 
+  };
 
   return (
     <div className={styles.container}>
@@ -37,7 +34,7 @@ export const UserRegistration = () => {
 
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>
-             Name
+              Name
             </label>
             <input
               type="text"
@@ -63,18 +60,17 @@ export const UserRegistration = () => {
           />
         </div>
 
-          <label htmlFor="password" className={styles.label}>
+        <label htmlFor="password" className={styles.label}>
           Password
-          </label>
-          <input
-            type={isPasswordShown ? 'text' : 'password'}
-            id="nameSoldier"
-            value={nameSoldier}
-            onChange={(e) => setnameSoldier(e.target.value)}
-            className={styles.input}
-            required
-          />
-        
+        </label>
+        <input
+          type={isPasswordShown ? 'text' : 'password'}
+          id="nameSoldier"
+          value={nameSoldier}
+          onChange={(e) => setnameSoldier(e.target.value)}
+          className={styles.input}
+          required
+        />
 
         <button type="submit" className={styles.button}>
           Join the toast club
@@ -82,5 +78,4 @@ export const UserRegistration = () => {
       </form>
     </div>
   );
-
 };
