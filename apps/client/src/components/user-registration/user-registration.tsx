@@ -16,7 +16,6 @@ export const UserRegistration = () => {
     <div className={styles.container}>
       <h1 className={styles.title}>Join the Toast Club</h1>
       <form onSubmit={handleSubmit} className={styles.form}>
-        {/* Aligner Id Soldier et Password côte à côte */}
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
             <label htmlFor="Id Soldier" className={styles.label}>

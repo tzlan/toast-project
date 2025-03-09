@@ -2,16 +2,41 @@ import { useState } from 'react';
 import styles from './admin-edit-user.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Navigation } from '../navigation/navigation';
+import { useForm, SubmitHandler } from 'react-hook-form';
+
+type UserFormInputs = {
+  idSoldier: string;
+  familyNameSoldier: string;
+  personalName: string;
+  password: string;
+  role: string | null;
+};
+
 export const AdminEditUser = () => {
-  const [idSoldier, setIdSoldier] = useState('');
-  const [familyNameSoldier, setfamilyNameSoldier] = useState('');
-  const [personalName, setpersonalName] = useState('');
-  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<UserFormInputs>({
+    defaultValues: {
+      idSoldier: '',
+      familyNameSoldier: '',
+      personalName: '',
+      password: '',
+      role: null,
+    },
+  });
+
+  const onSubmit: SubmitHandler<UserFormInputs> = (data) => {
+    
+    console.log(data);
+    console.log('Selected role:', selectedButton);
   };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -19,7 +44,10 @@ export const AdminEditUser = () => {
   const handleButtonClick = (buttonType: string) => {
     if (selectedButton === buttonType) {
       setSelectedButton(null);
-    } else setSelectedButton(buttonType);
+    } else {
+      setSelectedButton(buttonType);
+      setValue('role', buttonType); 
+    }
   };
 
   return (
@@ -27,19 +55,20 @@ export const AdminEditUser = () => {
       <Navigation />
       <div className={styles.container}>
         <h1 className={styles.title}>Edit user ✍🏼</h1>
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <div className={styles.formGroup}>
-            <label htmlFor="Id Soldier" className={styles.label}>
+            <label htmlFor="idSoldier" className={styles.label}>
               Soldier Id
             </label>
             <input
               type="number"
               id="idSoldier"
-              value={idSoldier}
-              onChange={(e) => setIdSoldier(e.target.value)}
               className={styles.input}
-              required
+              {...register('idSoldier', { required: true })}
             />
+            {errors.idSoldier && (
+              <span className={styles.error}>This field is required</span>
+            )}
           </div>
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
@@ -49,25 +78,27 @@ export const AdminEditUser = () => {
               <input
                 type="text"
                 id="familyNameSoldier"
-                value={familyNameSoldier}
-                onChange={(e) => setfamilyNameSoldier(e.target.value)}
                 className={styles.input}
-                required
+                {...register('familyNameSoldier', { required: true })}
               />
+              {errors.familyNameSoldier && (
+                <span className={styles.error}>This field is required</span>
+              )}
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="" className={styles.label}>
+              <label htmlFor="personalName" className={styles.label}>
                 Personal Name
               </label>
               <input
                 type="text"
-                id="nameSoldier"
-                value={personalName}
-                onChange={(e) => setpersonalName(e.target.value)}
+                id="personalName"
                 className={styles.input}
-                required
+                {...register('personalName', { required: true })}
               />
+              {errors.personalName && (
+                <span className={styles.error}>This field is required</span>
+              )}
             </div>
           </div>
           <div className={styles.formGroup}>
@@ -77,20 +108,22 @@ export const AdminEditUser = () => {
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               className={styles.input}
-              required
+              {...register('password', { required: true })}
             />
             <span className={styles.eye} onClick={togglePasswordVisibility}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
+            {errors.password && (
+              <span className={styles.error}>This field is required</span>
+            )}
           </div>
 
           <div className={styles.buttonGroup}>
             <button
+              type="button" 
               className={`${styles.buttonAdmin} ${
-                selectedButton === 'criminal'
+                selectedButton === 'persona'
                   ? styles.buttonGray
                   : styles.buttonRed
               }`}
@@ -100,8 +133,9 @@ export const AdminEditUser = () => {
             </button>
 
             <button
+              type="button"
               className={`${styles.buttonAdmin} ${
-                selectedButton === 'persona'
+                selectedButton === 'criminal'
                   ? styles.buttonGray
                   : styles.buttonYellow
               }`}
@@ -111,6 +145,7 @@ export const AdminEditUser = () => {
             </button>
 
             <button
+              type="button" 
               className={`${styles.buttonAdmin} ${styles.buttonOrange}`}
               onClick={() => handleButtonClick('admin')}
             >
