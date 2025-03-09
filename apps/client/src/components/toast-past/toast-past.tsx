@@ -1,8 +1,30 @@
+import React from 'react';
 import { Navigation } from '../navigation/navigation';
 import styles from './toast-past.module.css';
 
-export const ToastPast = () => {
-  const entries = [
+
+interface Entry {
+  id: number;
+  person: string;
+  date: string;
+  description: string;
+}
+
+
+const renderTableRows = (entries: Entry[]) => {
+
+  return entries.map((entry) => (
+    <tr key={entry.id}>
+      <td>{entry.person}</td>
+      <td>{entry.date}</td>
+      <td>{entry.description}</td>
+    </tr>
+  ));
+};
+
+export const ToastPast: React.FC = () => {
+ 
+  const entries: Entry[] = [
     {
       id: 1,
       person: 'Tomer',
@@ -19,7 +41,7 @@ export const ToastPast = () => {
       id: 3,
       person: 'Ethan',
       date: '15/03/2025',
-      description: 'Finish projet',
+      description: 'Finish project',
     },
   ];
 
@@ -37,15 +59,7 @@ export const ToastPast = () => {
                 <th>Description</th>
               </tr>
             </thead>
-            <tbody>
-              {entries.map((entry) => (
-                <tr key={entry.id}>
-                  <td>{entry.person}</td>
-                  <td>{entry.date}</td>
-                  <td>{entry.description}</td>
-                </tr>
-              ))}
-            </tbody>
+            <tbody>{renderTableRows(entries)}</tbody>
           </table>
         </div>
       </div>
