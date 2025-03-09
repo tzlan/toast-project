@@ -57,7 +57,7 @@ body {
   border: 0rem solid;
   text-align: center;
   background: var(--gray-for-cellules-tab);
-  border-radius: 0.5rem; /* Coins arrondis */
+  border-radius: 0.5rem;
 }
 
 .tab th {
@@ -73,53 +73,4 @@ body {
 .tab tr:hover td {
   background: var(--gray-for-tab);
   transition: background 0.7s ease;
-}
-
-.stats-container {
-  display: flex;
-  gap: 6rem;
-  justify-content: center;
-  margin-top: 2vh;
-  width: 100%;
-}
-
-.stat-box {
-  background: linear-gradient(
-    135deg,
-    var(--blue-main-page),
-    var(--purple-main-page)
-  );
-  width: 11rem;
-  height: 11rem;
-  min-width: 6rem;
-  min-height: 6rem;
-  border-radius: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0 0 15vw purple;
-  transition: box-shadow 0.3s ease, transform 0.3s ease;
-}
-
-.stat-box:hover {
-  box-shadow: 0 0 1vw white;
-  transform: translateY(-5%);
-}
-
-.stat-title {
-  font-size: clamp(0.8rem, 1.1vw, 1.5rem);
-  color: white;
-  font-weight: 400;
-  margin-bottom: 0.7rem;
-  text-align: center;
-}
-
-.stat-number {
-  font-size: 3rem;
-  color: white;
-  font-weight: 700;
-  margin: 0;
-  line-height: 1;
-  text-shadow: 0 0 1vw white;
 }

@@ -40,7 +40,7 @@
 
 .navLink:active {
   background: var(--gray-for-cellules-tab);
-  color: #fff;
+  color: white;
   box-shadow: 0 0 131rem x var(--gray-for-tab);
 }
 

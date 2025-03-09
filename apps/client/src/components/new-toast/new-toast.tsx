@@ -4,7 +4,7 @@ import { Navigation } from '../navigation/navigation';
 
 export const NewToast = () => {
   const [dateToast, setdateToast] = useState('');
-  const [hourToast, setHourToast] = useState('');
+  const [hourOfToast, setHourOfToast] = useState('');
   const [descriptionToast, setDescriptionToast] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -39,9 +39,9 @@ export const NewToast = () => {
             </label>
             <input
               type="time"
-              id="hourToast"
-              value={hourToast}
-              onChange={(e) => setHourToast(e.target.value)}
+              id="hourOfToast"
+              value={hourOfToast}
+              onChange={(e) => setHourOfToast(e.target.value)}
               className={styles.input}
               required
             />
