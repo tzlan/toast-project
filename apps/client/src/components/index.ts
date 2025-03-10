@@ -5,3 +5,4 @@ export * from './record-page';
 export * from './admin-new-toast';
 export * from './not-found';
 export * from './user-registration';
+export * from './toast-past';

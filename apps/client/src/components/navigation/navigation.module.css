@@ -1,14 +1,14 @@
 .nav {
   width: 100%;
   padding: 0.5rem 2rem;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.8);
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000;
   box-shadow: 0 2rem 10rem black;
-  justify-content: center;
   display: flex;
+  justify-content: center;
+  height: 4rem;
 }
 
 .navList {
@@ -35,15 +35,20 @@
 
 .navLink:hover {
   background: var(--white-for-button);
-  transform: scale(0.05);
+  transform: scale(1.05);
 }
 
 .navLink:active {
   background: var(--gray-for-cellules-tab);
   color: white;
-  box-shadow: 0 0 131rem x var(--gray-for-tab);
+  box-shadow: 0 0 13rem var(--gray-for-tab);
 }
 
-.container {
-  padding-top: 1rem;
+.navSpacer {
+  height: 4rem;
+  width: 100%;
+}
+
+.content {
+  padding-top: 10rem;
 }

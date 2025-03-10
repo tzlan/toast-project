@@ -5,12 +5,12 @@ import {
   NotFound,
   RecordPage,
   UserRegistration,
-  
 } from '../components';
 
 import { Routes, Route } from 'react-router-dom';
 import { NewToast } from '../components/new-toast';
 import { ToastPast } from '../components/toast-past';
+import { Criminal } from '../components/criminal';
 
 export const App = () => {
   return (
@@ -28,10 +28,8 @@ export const App = () => {
 
       {/**Routes */}
       <Route path="/record-page" element={<RecordPage />} />
-      <Route path="/status-users" element={<ToastPast />} />
       <Route path="/toast-past" element={<ToastPast />} />
-
-      {/**Not found route */}
+      <Route path="/criminal" element={<Criminal />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

@@ -21,6 +21,8 @@ body {
   );
   font-family: 'Segoe UI', system-ui, sans-serif;
   padding: 2rem;
+  width: 100%;
+  padding: 10%;
 }
 
 .title {
@@ -38,7 +40,7 @@ body {
   align-items: center;
   width: 100%;
   max-width: 50rem;
-  padding: 3rem;
+  padding: 2rem;
   background: white;
   border-radius: 2rem;
   backdrop-filter: blur(10px);
@@ -116,7 +118,7 @@ body {
 
 .formRow {
   display: flex;
-  gap: 5%;
+  gap: 3%;
   width: 100%;
   margin-bottom: 1rem;
 }
