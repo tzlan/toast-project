@@ -10,58 +10,54 @@ import {
 
 export const Navigation: React.FC = () => {
   return (
-    <div className={styles.nav}>
-      <NavigationMenu>
-        <NavigationMenuList className={`${styles.navList} `}>
-          <NavigationMenuItem className={styles.navItem}>
-            <NavLink to="/admin-edit-user" className={styles.navLink}>
-              Edit User
-            </NavLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem className={styles.navItem}>
-            <NavLink to="/admin-new-toast" className={styles.navLink}>
-              Admin New Toast
-            </NavLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem className={styles.navItem}>
-            <NavLink to="/" className={styles.navLink}>
-              Login
-            </NavLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem className={styles.navItem}>
-            <NavLink to="/new-toast" className={styles.navLink}>
-              New Toast
-            </NavLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem className={styles.navItem}>
-            <NavLink to="/record-page" className={styles.navLink}>
-              Record Page
-            </NavLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem className={styles.navItem}>
-            <NavLink to="/user-registration" className={styles.navLink}>
-              User Registration
-            </NavLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem className={styles.navItem}>
-            <NavLink to="/status-users" className={styles.navLink}>
-              Status Users
-            </NavLink>
-          </NavigationMenuItem>
-
-          <NavigationMenuItem className={styles.navItem}>
-            <NavLink to="/toast-past" className={styles.navLink}>
-              Toasts past
-            </NavLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-    </div>
+    <>
+      <div className={styles.nav}>
+        <NavigationMenu>
+          <NavigationMenuList className={styles.navList}>
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/admin-edit-user" className={styles.navLink}>
+                Edit User
+              </NavLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/admin-new-toast" className={styles.navLink}>
+                Admin New Toast
+              </NavLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/" className={styles.navLink}>
+                Login
+              </NavLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/new-toast" className={styles.navLink}>
+                New Toast
+              </NavLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/record-page" className={styles.navLink}>
+                Record Page
+              </NavLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/user-registration" className={styles.navLink}>
+                User Registration
+              </NavLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/toast-past" className={styles.navLink}>
+                Toasts past
+              </NavLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/criminal" className={styles.navLink}>
+                Criminals
+              </NavLink>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
+      </div>
+    </>
   );
 };
+

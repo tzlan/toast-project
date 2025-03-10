@@ -1,0 +1,142 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.nav {
+  width: 100%;
+  padding: 0.5rem 2rem;
+  background: transparent;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  box-shadow: 0 2rem 10rem black;
+  justify-content: center;
+  display: flex;
+}
+
+.navList {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem {
+  padding: 0;
+}
+
+.navLink {
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 100;
+  color: white;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.navLink:hover {
+  background: var(--white-for-button);
+  transform: scale(0.05);
+}
+
+.navLink:active {
+  background: var(--gray-for-cellules-tab);
+  color: white;
+  box-shadow: 0 0 131rem x var(--gray-for-tab);
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60rem;
+  background: linear-gradient(
+    135deg,
+    var(--blue-main-page),
+    var(--purple-main-page)
+  );
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  padding: 15rem;
+}
+
+.title {
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.3rem;
+  text-align: center;
+}
+
+/* Nouveau conteneur pour les tableaux */
+.tablesContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 25rem;
+  padding: 2rem;
+  border-radius: 2rem;
+  box-shadow: white;
+}
+
+.tab {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0.5rem;
+}
+
+.tab th,
+.tab td {
+  padding: 1rem 1rem;
+  font-size: 1rem;
+  color: white;
+  border: 0rem solid;
+  text-align: center;
+  background: var(--gray-for-cellules-tab);
+  border-radius: 0.5rem;
+}
+
+.tab th {
+  background: linear-gradient(
+    10deg,
+    var(--purple-main-page) 0%,
+    var(--blue-main-page) 100%
+  );
+  color: white;
+  font-weight: 100;
+}
+
+.tab tr:hover td {
+  background: var(--gray-for-tab);
+  transition: background 0.7s ease;
+}
+
+
+.tableTitle {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 200;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
