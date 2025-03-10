@@ -11,11 +11,14 @@ import { Routes, Route } from 'react-router-dom';
 import { NewToast } from '../components/new-toast';
 import { ToastPast } from '../components/toast-past';
 import { Criminal } from '../components/criminal';
+import { Dashboard } from '../components/dashboard';
 
 export const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Dashboard />} />
+
+      <Route path="/login" element={<Login />} />
 
       {/**Admin routes */}
       <Route path="/admin-new-toast" element={<AdminNewToast />} />
@@ -25,6 +28,7 @@ export const App = () => {
       {/**Form routes */}
       <Route path="/user-registration" element={<UserRegistration />} />
       <Route path="/new-toast" element={<NewToast />} />
+      <Route path="/dashboard" element={<Dashboard />} />
 
       {/**Routes */}
       <Route path="/record-page" element={<RecordPage />} />
