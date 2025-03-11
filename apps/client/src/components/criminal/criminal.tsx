@@ -35,7 +35,9 @@ export const Criminal: React.FC = () => {
     <div>
       <Navigation />
       <div className={styles.container}>
-        <h1 className={styles.title}>⚠️ Welcome to criminal table ⚠️</h1>
+        <h1 className={styles.title}>
+          ⚠️ Welcome to the dark side
+        </h1>
 
         <div className={styles.tablesContainer}>
           <div className={styles.form}>
