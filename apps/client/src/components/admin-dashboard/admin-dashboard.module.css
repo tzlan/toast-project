@@ -1,0 +1,88 @@
+.container {
+  min-height: 100vh;
+  justify-content: flex-start;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 60rem;
+  background: linear-gradient(
+    135deg,
+    var(--blue-main-page),
+    var(--purple-main-page)
+  );
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  padding: 15rem;
+}
+
+.title {
+  margin-bottom: 3rem;
+  font-size: 2.5rem;
+  color: white;
+  font-weight: 600;
+  letter-spacing: 0.3rem;
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 60rem;
+  padding: 3rem;
+  border-radius: 2rem;
+  box-shadow: white;
+}
+
+.tab {
+  width: 120%;
+  border-collapse: separate;
+  border-spacing: 0.5rem;
+}
+
+.tab th,
+.tab td {
+  padding: 1rem 1rem;
+  font-size: 1rem;
+  color: white;
+  border: 0rem solid;
+  text-align: center;
+  background: var(--gray-for-cellules-tab);
+  border-radius: 0.5rem;
+}
+
+.tab th {
+  background: linear-gradient(
+    10deg,
+    var(--purple-main-page) 0%,
+    var(--blue-main-page) 100%
+  );
+  color: white;
+  font-weight: 100;
+}
+
+.tab tr:hover td {
+  background: var(--gray-for-tab);
+  transition: background 0.7s ease;
+}
+
+.deleteButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: white;
+  background: var(--red-for-button, #e74c3c);
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.deleteButton:hover {
+  background: var(--dark-red-for-button, #c0392b);
+}
+
+.selectedRow {
+  background: rgba(255, 255, 255, 0.1);
+}

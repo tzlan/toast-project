@@ -1,5 +1,3 @@
-// apps/client/src/components/navigation/Navigation.tsx
-import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './navigation.module.css';
 import {
@@ -25,10 +23,17 @@ export const Navigation: React.FC = () => {
               </NavLink>
             </NavigationMenuItem>
             <NavigationMenuItem className={styles.navItem}>
-              <NavLink to="/" className={styles.navLink}>
+              <NavLink to="/login" className={styles.navLink}>
                 Login
               </NavLink>
             </NavigationMenuItem>
+
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/dashboard" className={styles.navLink}>
+                Dashboard
+              </NavLink>
+            </NavigationMenuItem>
+
             <NavigationMenuItem className={styles.navItem}>
               <NavLink to="/new-toast" className={styles.navLink}>
                 New Toast
@@ -37,6 +42,11 @@ export const Navigation: React.FC = () => {
             <NavigationMenuItem className={styles.navItem}>
               <NavLink to="/record-page" className={styles.navLink}>
                 Record Page
+              </NavLink>
+            </NavigationMenuItem>
+            <NavigationMenuItem className={styles.navItem}>
+              <NavLink to="/admin-dashboard" className={styles.navLink}>
+                Admin DashBoard
               </NavLink>
             </NavigationMenuItem>
             <NavigationMenuItem className={styles.navItem}>

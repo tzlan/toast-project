@@ -24,6 +24,7 @@ export const App = () => {
       <Route path="/admin-new-toast" element={<AdminNewToast />} />
       <Route path="/admin-edit-user" element={<AdminEditUser />} />
       <Route path="/edit-user" element={<AdminEditUser />} />
+      <Route path="/admin-dashboard" element={<Dashboard />} />
 
       {/**Form routes */}
       <Route path="/user-registration" element={<UserRegistration />} />
