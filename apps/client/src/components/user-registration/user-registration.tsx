@@ -19,13 +19,16 @@ export const UserRegistration = () => {
         <div className={styles.formRow}>
           <div className={styles.formGroup}>
             <label htmlFor="Id Soldier" className={styles.label}>
-              Id Soldier
+              Soldier Id
             </label>
             <input
-              type="number"
+              type="text"
               id="idSoldier"
               value={idSoldier}
-              onChange={(e) => setIdSoldier(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value)) setIdSoldier(value); 
+              }}
               className={styles.input}
               required
             />
@@ -33,7 +36,7 @@ export const UserRegistration = () => {
 
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>
-              Name
+              First name
             </label>
             <input
               type="text"
@@ -47,7 +50,7 @@ export const UserRegistration = () => {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="familyNameSoldier" className={styles.label}>
-            Family Name
+            Last Name
           </label>
           <input
             type="text"

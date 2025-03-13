@@ -1,4 +1,3 @@
-// Importation des modules nécessaires
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import styles from './login.module.css';
@@ -24,7 +23,7 @@ export const Login = () => {
             Soldier Id
           </label>
           <input
-            type="text" // Correction du type d'entrée
+            type="text"
             id="idSoldier"
             value={idSoldier}
             onChange={(e) => setIdSoldier(e.target.value)}
@@ -54,7 +53,7 @@ export const Login = () => {
           Login
         </button>
 
-        <div className={styles.forgotPassword}>
+        <div className={styles.createAccount}>
           <Link to="/user-registration">Create account</Link>
         </div>
       </form>

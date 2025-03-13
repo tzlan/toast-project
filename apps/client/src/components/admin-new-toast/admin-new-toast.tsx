@@ -70,7 +70,6 @@ export const AdminNewToast = () => {
               />
               <CommandList className={styles.commandList}>
                 {' '}
-                {/* Ajout d’une classe pour limiter */}
                 <CommandEmpty>No results found.</CommandEmpty>
                 {users.map((user) => (
                   <CommandItem
@@ -102,20 +101,6 @@ export const AdminNewToast = () => {
           </div>
 
           <div className={styles.formGroup}>
-            <label htmlFor="description" className={styles.label}>
-              Description
-            </label>
-            <input
-              type="text"
-              id="description"
-              value={descriptionToast}
-              onChange={(e) => setDescriptionToast(e.target.value)}
-              className={cn('w-80', styles.input)}
-              required
-            />
-          </div>
-
-          <div className={styles.formGroup}>
             <label htmlFor="hourToast" className={styles.label}>
               Hour
             </label>
@@ -124,6 +109,20 @@ export const AdminNewToast = () => {
               id="hourToast"
               value={hourToast}
               onChange={(e) => setHourToast(e.target.value)}
+              className={cn('w-80', styles.input)}
+              required
+            />
+          </div>
+
+          <div className={styles.formGroup}>
+            <label htmlFor="description" className={styles.label}>
+              Description
+            </label>
+            <input
+              type="text"
+              id="description"
+              value={descriptionToast}
+              onChange={(e) => setDescriptionToast(e.target.value)}
               className={cn('w-80', styles.input)}
               required
             />

@@ -3,17 +3,18 @@ body {
   margin: 0;
   padding: 0;
   height: 100%;
-  width: 100%;
+  width: 1000%;
 }
 
 .container {
   min-height: 100vh;
   justify-content: flex-start;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 60rem;
+  height: 54rem;
   background: linear-gradient(
     135deg,
     var(--blue-main-page) 0%,
@@ -27,7 +28,7 @@ body {
   margin-bottom: 3rem;
   font-size: 2.5rem;
   color: white;
-  text-shadow: 0 1rem 2rem black;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-weight: 600;
   letter-spacing: 0.3rem;
   text-align: center;
@@ -40,14 +41,15 @@ body {
   width: 100%;
   max-width: 35rem;
   padding: 3rem;
-  background: var(--white-for-imput);
+  background: rgba(255, 255, 255, 0.95);
   border-radius: 2rem;
-  box-shadow: 0 2rem 4rem black;
+  box-shadow: 0 10rem 25rem black;
   backdrop-filter: blur(10px);
   transition: transform 0.3s ease;
 }
 
 .formGroup {
+  flex: 1;
   margin-bottom: 2rem;
   position: relative;
   width: 100%;
@@ -57,8 +59,7 @@ body {
   display: block;
   margin-bottom: 1rem;
   font-size: 1rem;
-  color: var(--color-label-blue) 0%;
-
+  color: var(--labels-color);
   font-weight: 500;
   transition: color 0.3s ease;
   width: 100%;
@@ -66,19 +67,19 @@ body {
 
 .input {
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
   font-size: 1rem;
-  color: var(--gray-for-circle-input);
+  color: var(--imput-backgound);
   background-color: var(--white-for-imput);
-  border: 2px solid var(--gray-for-circle-input);
+  border: 0.1rem solid var(--gray-for-circle-input);
   border-radius: 2rem;
   transition: all 0.9s ease;
   outline: none;
-  box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 .input:focus {
-  border-color: var(--blue-main-page);
+  border-color: var(--blue-main-page) 0%;
   background-color: white;
 }
 
@@ -87,9 +88,9 @@ body {
 }
 
 .button {
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: white;
   background: linear-gradient(
     135deg,
@@ -103,7 +104,6 @@ body {
   margin-top: 1rem;
   width: 90%;
 }
-
 .eye {
   position: absolute;
   right: 0.5rem;
@@ -111,4 +111,13 @@ body {
   width: 7%;
   transform: translateY(-50%);
   cursor: pointer;
+}
+.formRow {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.createAccount {
+  padding: 3%;
 }
