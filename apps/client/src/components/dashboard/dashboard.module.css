@@ -1,4 +1,3 @@
-/* apps/client/src/components/dashboard/dashboard.module.css */
 .container {
   min-height: 100vh;
   justify-content: flex-start;
@@ -85,7 +84,12 @@
 }
 
 .selectedRow {
-  background: rgba(255, 255, 255, 0.1); /* Fond léger pour la ligne sélectionnée */
+  background: rgba(
+    255,
+    255,
+    255,
+    0.1
+  ); 
 }
 
 .selectedButton {

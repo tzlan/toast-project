@@ -50,7 +50,7 @@ export const ToastPast: React.FC = () => {
           <table className={styles.tab}>
             <thead>
               <tr>
-                <th>Person</th>
+                <th>User</th>
                 <th>Date</th>
                 <th>Description</th>
               </tr>

@@ -72,17 +72,20 @@
   padding: 0.5rem 1rem;
   font-size: 0.9rem;
   color: white;
-  background: var(--red-for-button, #e74c3c);
+  background: var(--red-for-button, red);
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
+  padding: 1rem 1rem;
   transition: background 0.3s ease;
 }
 
-.deleteButton:hover {
-  background: var(--dark-red-for-button, #c0392b);
-}
-
-.selectedRow {
-  background: rgba(255, 255, 255, 0.1);
+.confirmButton {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  color: white;
+  background: var(--red-for-button, red);
+  border-radius: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
 }

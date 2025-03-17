@@ -10,30 +10,13 @@ interface Entry {
   status: string;
 }
 
-const renderTableRows = (
-  entries: Entry[],
-  selectedDeleteId: number | null,
-  onSelectDelete: (id: number) => void
-) => {
+const renderTableRows = (entries: Entry[]) => {
   return entries.map((entry) => (
-    <tr
-      key={entry.id}
-      className={selectedDeleteId === entry.id ? styles.selectedRow : ''}
-    >
+    <tr key={entry.id} className={entry.id ? styles.selectedRow : ''}>
       <td>{entry.person}</td>
       <td>{entry.date}</td>
       <td>{entry.description}</td>
       <td>{entry.status}</td>
-      <td>
-        <button
-          className={`${styles.deleteButton} ${
-            selectedDeleteId === entry.id ? styles.selectedButton : ''
-          }`}
-          onClick={() => onSelectDelete(entry.id)}
-        >
-          Delete
-        </button>
-      </td>
     </tr>
   ));
 };
@@ -63,20 +46,6 @@ export const Dashboard: React.FC = () => {
     },
   ]);
 
-  const [selectedDeleteId, setSelectedDeleteId] = useState<number | null>(null);
-
-  const handleSelectDelete = (id: number) => {
-    if (selectedDeleteId === id) setSelectedDeleteId(null);
-    else setSelectedDeleteId(id);
-  };
-
-  const handleConfirmDelete = () => {
-    if (selectedDeleteId !== null) {
-      setEntries(entries.filter((entry) => entry.id !== selectedDeleteId));
-      setSelectedDeleteId(null);
-    }
-  };
-
   return (
     <div>
       <Navigation />
@@ -86,25 +55,14 @@ export const Dashboard: React.FC = () => {
           <table className={styles.tab}>
             <thead>
               <tr>
-                <th>Person</th>
+                <th>User</th>
                 <th>Date</th>
                 <th>Description</th>
                 <th>Status</th>
-                <th>Delete</th>
               </tr>
             </thead>
-            <tbody>
-              {renderTableRows(entries, selectedDeleteId, handleSelectDelete)}
-            </tbody>
+            <tbody>{renderTableRows(entries)}</tbody>
           </table>
-          {selectedDeleteId !== null && (
-            <button
-              className={styles.confirmButton}
-              onClick={handleConfirmDelete}
-            >
-              Are you sure to delete ?
-            </button>
-          )}
         </div>
       </div>
     </div>

@@ -24,7 +24,7 @@ const renderTableRows = (
       <td>{entry.date}</td>
       <td>{entry.description}</td>
       <td>{entry.status}</td>
-      <td>
+      
         <button
           className={`${styles.deleteButton} ${
             selectedDeleteId === entry.id ? styles.selectedButton : ''
@@ -33,7 +33,7 @@ const renderTableRows = (
         >
           Delete
         </button>
-      </td>
+      
     </tr>
   ));
 };
@@ -77,10 +77,6 @@ export const AdminDashboard: React.FC = () => {
     }
   };
 
-  /*const modifyStatus =() =>{
-    if
-  }*/
-
   return (
     <div>
       <Navigation />
@@ -94,7 +90,6 @@ export const AdminDashboard: React.FC = () => {
                 <th>Date</th>
                 <th>Description</th>
                 <th>Status</th>
-                <th>Delete</th>
               </tr>
             </thead>
             <tbody>

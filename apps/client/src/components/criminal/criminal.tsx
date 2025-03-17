@@ -35,9 +35,7 @@ export const Criminal: React.FC = () => {
     <div>
       <Navigation />
       <div className={styles.container}>
-        <h1 className={styles.title}>
-          ⚠️ Welcome to the dark side
-        </h1>
+        <h1 className={styles.title}>⚠️ Welcome to the dark side</h1>
 
         <div className={styles.tablesContainer}>
           <div className={styles.form}>
@@ -45,7 +43,7 @@ export const Criminal: React.FC = () => {
             <table className={styles.tab}>
               <thead>
                 <tr>
-                  <th>Person</th>
+                  <th>🔞</th>
                 </tr>
               </thead>
               <tbody>{renderTableRows(entries)}</tbody>
@@ -57,7 +55,7 @@ export const Criminal: React.FC = () => {
             <table className={styles.tab}>
               <thead>
                 <tr>
-                  <th>Person</th>
+                  <th>👺</th>
                 </tr>
               </thead>
               <tbody>{renderTableRows(entries)}</tbody>

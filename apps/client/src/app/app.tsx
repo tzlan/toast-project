@@ -12,6 +12,7 @@ import { NewToast } from '../components/new-toast';
 import { ToastPast } from '../components/toast-past';
 import { Criminal } from '../components/criminal';
 import { Dashboard } from '../components/dashboard';
+import { AdminDashboard } from '../components/admin-dashboard';
 
 export const App = () => {
   return (
@@ -24,7 +25,7 @@ export const App = () => {
       <Route path="/admin-new-toast" element={<AdminNewToast />} />
       <Route path="/admin-edit-user" element={<AdminEditUser />} />
       <Route path="/edit-user" element={<AdminEditUser />} />
-      <Route path="/admin-dashboard" element={<Dashboard />} />
+      <Route path="/admin-dashboard" element={<AdminDashboard />} />
 
       {/**Form routes */}
       <Route path="/user-registration" element={<UserRegistration />} />

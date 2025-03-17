@@ -3,6 +3,8 @@ import styles from './admin-edit-user.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Navigation } from '../navigation/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type UserFormInputs = {
   idSoldier: string;
@@ -13,8 +15,10 @@ type UserFormInputs = {
 };
 
 export const AdminEditUser = () => {
+  const notify = () => toast('User updated!');
   const [showPassword, setShowPassword] = useState(false);
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
+  const [idSoldier, setIdSoldier] = useState('');
 
   const {
     register,
@@ -32,9 +36,7 @@ export const AdminEditUser = () => {
   });
 
   const onSubmit: SubmitHandler<UserFormInputs> = (data) => {
-    
-    console.log(data);
-    console.log('Selected role:', selectedButton);
+    notify();
   };
 
   const togglePasswordVisibility = () => {
@@ -44,15 +46,28 @@ export const AdminEditUser = () => {
   const handleButtonClick = (buttonType: string) => {
     if (selectedButton === buttonType) {
       setSelectedButton(null);
+      setValue('role', null, { shouldValidate: true });
     } else {
       setSelectedButton(buttonType);
-      setValue('role', buttonType); 
+      setValue('role', buttonType, { shouldValidate: true });
     }
   };
 
   return (
     <div>
       <Navigation />
+      <ToastContainer
+        position="bottom-left"
+        autoClose={4968}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick={false}
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <div className={styles.container}>
         <h1 className={styles.title}>Edit user ✍🏼</h1>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
@@ -61,11 +76,20 @@ export const AdminEditUser = () => {
               Soldier Id
             </label>
             <input
-              type="number"
+              type="text"
               id="idSoldier"
+              value={idSoldier}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^\d*$/.test(value)) {
+                  setIdSoldier(value);
+                  setValue('idSoldier', value, { shouldValidate: true });
+                }
+              }}
               className={styles.input}
-              {...register('idSoldier', { required: true })}
+              required
             />
+
             {errors.idSoldier && (
               <span className={styles.error}>This field is required</span>
             )}
@@ -73,7 +97,7 @@ export const AdminEditUser = () => {
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
               <label htmlFor="familyNameSoldier" className={styles.label}>
-                Family Name
+                First Name
               </label>
               <input
                 type="text"
@@ -88,7 +112,7 @@ export const AdminEditUser = () => {
 
             <div className={styles.formGroup}>
               <label htmlFor="personalName" className={styles.label}>
-                Personal Name
+                Last Name
               </label>
               <input
                 type="text"
@@ -121,7 +145,7 @@ export const AdminEditUser = () => {
 
           <div className={styles.buttonGroup}>
             <button
-              type="button" 
+              type="button"
               className={`${styles.buttonAdmin} ${
                 selectedButton === 'persona'
                   ? styles.buttonGray
@@ -145,7 +169,7 @@ export const AdminEditUser = () => {
             </button>
 
             <button
-              type="button" 
+              type="button"
               className={`${styles.buttonAdmin} ${styles.buttonOrange}`}
               onClick={() => handleButtonClick('admin')}
             >

@@ -62,7 +62,7 @@ body {
 
 .input {
   width: 100%;
-  padding: 0.75rem 1.5rem;
+  padding: 1rem 1rem;
   font-size: 0.9rem;
   color: var(--imput-backgound);
   background-color: var(--white-for-imput);
