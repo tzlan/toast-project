@@ -24,16 +24,14 @@ const renderTableRows = (
       <td>{entry.date}</td>
       <td>{entry.description}</td>
       <td>{entry.status}</td>
-      
-        <button
-          className={`${styles.deleteButton} ${
-            selectedDeleteId === entry.id ? styles.selectedButton : ''
-          }`}
-          onClick={() => onSelectDelete(entry.id)}
-        >
-          Delete
-        </button>
-      
+      <button
+        className={`${styles.deleteButton} ${
+          selectedDeleteId === entry.id ? styles.selectedButton : ''
+        }`}
+        onClick={() => onSelectDelete(entry.id)}
+      >
+        Delete
+      </button>
     </tr>
   ));
 };
@@ -86,6 +84,7 @@ export const AdminDashboard: React.FC = () => {
           <table className={styles.tab}>
             <thead>
               <tr>
+                onSelectDelete: (id:
                 <th>Person</th>
                 <th>Date</th>
                 <th>Description</th>

@@ -3,9 +3,9 @@ import styles from './record-page.module.css';
 
 export const RecordPage = () => {
   const entries = [
-    { id: 1, person: 'Shaun', Score: '1' },
-    { id: 2, person: 'Aurel', Score: '4' },
-    { id: 3, person: 'Ethan', Score: '2' },
+    { id: 1, person: 'Shaun', score: '1' },
+    { id: 2, person: 'Aurel', score: '4' },
+    { id: 3, person: 'Ethan', score: '2' },
   ];
 
   const monthRecord = 10;
@@ -31,7 +31,7 @@ export const RecordPage = () => {
             <p className={styles['stat-number']}>{personalRecord}</p>
           </div>
         </div>
-
+ 
         <div className={styles.form}>
           <table className={styles.tab}>
             <thead>
@@ -44,7 +44,7 @@ export const RecordPage = () => {
               {entries.map((entry) => (
                 <tr key={entry.id}>
                   <td>{entry.person}</td>
-                  <td>{entry.Score}</td>
+                  <td>{entry.score}</td>
                 </tr>
               ))}
             </tbody>
