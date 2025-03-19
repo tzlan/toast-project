@@ -49,21 +49,7 @@ export const Navigation: React.FC = () => {
                 Admin DashBoard
               </NavLink>
             </NavigationMenuItem>
-            <NavigationMenuItem className={styles.navItem}>
-              <NavLink to="/user-registration" className={styles.navLink}>
-                User Registration
-              </NavLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem className={styles.navItem}>
-              <NavLink to="/toast-past" className={styles.navLink}>
-                Toasts past
-              </NavLink>
-            </NavigationMenuItem>
-            <NavigationMenuItem className={styles.navItem}>
-              <NavLink to="/criminal" className={styles.navLink}>
-                Criminals
-              </NavLink>
-            </NavigationMenuItem>
+           
           </NavigationMenuList>
         </NavigationMenu>
       </div>
