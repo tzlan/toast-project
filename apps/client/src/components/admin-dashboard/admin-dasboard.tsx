@@ -84,7 +84,6 @@ export const AdminDashboard: React.FC = () => {
           <table className={styles.tab}>
             <thead>
               <tr>
-                onSelectDelete: (id:
                 <th>Person</th>
                 <th>Date</th>
                 <th>Description</th>
