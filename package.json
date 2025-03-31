@@ -7,7 +7,9 @@
   "dependencies": {
     "@nestjs/common": "^10.0.2",
     "@nestjs/core": "^10.0.2",
+    "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.2",
+    "@nestjs/sequelize": "^11.0.0",
     "@next/bundle-analyzer": "^15.2.1",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-navigation-menu": "^1.2.5",
@@ -17,6 +19,8 @@
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
     "lucide-react": "^0.477.0",
+    "pg": "^8.14.1",
+    "pg-hstore": "^2.3.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-hook-form": "^7.54.2",
@@ -25,6 +29,8 @@
     "react-toastify": "^11.0.5",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
+    "sequelize": "^6.37.6",
+    "sequelize-typescript": "^2.1.6",
     "tailwind-merge": "^3.0.2"
   },
   "devDependencies": {
