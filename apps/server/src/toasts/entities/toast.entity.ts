@@ -11,26 +11,24 @@ import { User } from '../../users/entities/user.entity';
 
 @Table({ tableName: 'toasts', paranoid: true })
 export class Toast extends Model<Toast> {
+
   @PrimaryKey
   @Column({
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
   })
-  override id!: string;
-
-
+  id!: string;
 
   @ForeignKey(() => User)
   @Column({
-    type: DataType.UUID,  
+    type: DataType.UUID,
     allowNull: false,
-    field: 'user_id',  
+    field: 'user_id',
   })
-  userId!: string;  
+  userId!: string;
 
   @BelongsTo(() => User, { foreignKey: 'userId' })
   user!: User;
-
 
   @Column({
     type: DataType.STRING,
@@ -49,7 +47,7 @@ export class Toast extends Model<Toast> {
   @Column({
     type: DataType.ENUM('CANCELED', 'DELAYED', 'ON TIME'),
     allowNull: false,
-    field: 'statustoast',
+    field: 'status_of_toast',
   })
   statusToast!: 'CANCELED' | 'DELAYED' | 'ON TIME';
 
@@ -60,4 +58,3 @@ export class Toast extends Model<Toast> {
   })
   place!: string;
 }
-

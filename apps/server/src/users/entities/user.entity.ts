@@ -6,6 +6,7 @@ import {
   PrimaryKey,
 } from 'sequelize-typescript';
 
+
 @Table({ tableName: 'users', paranoid: true })
 export class User extends Model<User> {
   @PrimaryKey
@@ -13,19 +14,26 @@ export class User extends Model<User> {
     type: DataType.UUID,
     defaultValue: DataType.UUIDV4,
   })
-  override id!: string;
+  id!: string;
 
   @Column({
-    type: DataType.STRING,
-    allowNull: false,
+    type: DataType.INTEGER,
+    unique: true,
+    allowNull: true,
   })
-  firstName!: string;
+  soldierId?: number;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
   lastName?: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  firstName!: string;
 
   @Column({
     type: DataType.STRING,
@@ -44,13 +52,6 @@ export class User extends Model<User> {
     defaultValue: false,
   })
   isAdmin!: boolean;
-
-  @Column({
-    type: DataType.INTEGER,
-    unique: true,
-    allowNull: true,
-  })
-  soldierId?: number;
 
   @Column({
     type: DataType.BOOLEAN,
