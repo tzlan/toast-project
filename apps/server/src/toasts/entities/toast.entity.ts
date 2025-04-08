@@ -9,8 +9,16 @@ import {
 } from 'sequelize-typescript';
 import { User } from '../../users/entities/user.entity';
 
+interface ToastAttributes {
+  id: string;
+  userId: string;
+  description: string;
+  date: Date;
+  statusToast: 'CANCELED' | 'DELAYED' | 'ON TIME';
+  place: string;
+}
 @Table({ tableName: 'toasts', paranoid: true })
-export class Toast extends Model<Toast> {
+export class Toast extends Model<ToastAttributes> {
 
   @PrimaryKey
   @Column({
