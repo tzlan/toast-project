@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersModule } from '../users';
-import { ToastsModule } from '../toasts';
+import { UsersModule } from '../modules/users';
+import { ToastsModule } from '../modules/toasts';
 
 @Module({
   imports: [

@@ -21,13 +21,13 @@ export class User extends Model<User> {
     unique: true,
     allowNull: true,
   })
-  soldierId?: number;
+  soldierId!: number;
 
   @Column({
     type: DataType.STRING,
     allowNull: true,
   })
-  lastName?: string;
+  lastName!: string;
 
   @Column({
     type: DataType.STRING,
@@ -39,13 +39,13 @@ export class User extends Model<User> {
     type: DataType.STRING,
     allowNull: true,
   })
-  password?: string;
+  password!: string;
 
   @Column({
     type: DataType.ENUM('CRIMINAL', 'LEGIT', 'PERSONA_NON_GRATA'),
     allowNull: true,
   })
-  status?: 'CRIMINAL' | 'LEGIT' | 'PERSONA_NON_GRATA';
+  status!: 'CRIMINAL' | 'LEGIT' | 'PERSONA_NON_GRATA';
 
   @Column({
     type: DataType.BOOLEAN,
