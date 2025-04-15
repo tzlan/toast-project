@@ -1,13 +1,9 @@
 import { IsString, IsDate, IsEnum } from 'class-validator';
-
-enum ToastStatus {
-  ON_TIME = 'ON TIME',
-  DELAYED = 'DELAYED',
-  CANCELED = 'CANCELED',
-}
+import { ToastStatus } from '../enums/toast-status.enum';
+import { Expose } from 'class-transformer';
 
 export class ToastDto {
-  @IsString()
+  @Expose()
   id!: string;
 
   @IsString()
@@ -16,11 +12,14 @@ export class ToastDto {
   @IsDate()
   date!: Date;
 
+  
   @IsEnum(ToastStatus)
-  statusToast!: 'ON TIME' | 'DELAYED' | 'CANCELED';
+  statusToast!: ToastStatus;
 
   @IsString()
   place!: string;
 
-
+  @Expose()
+  @IsString()
+  userId!: string;
 }
