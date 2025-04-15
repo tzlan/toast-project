@@ -21,7 +21,7 @@ export class UserDto {
   isStatusForced!: boolean;
 
   @IsEnum(UsersStatus)
-  status!: 'CRIMINAL' | 'LEGIT' | 'PERSONA_NON_GRATA';
+  status!: UsersStatus;
 
   @IsDate()
   createdAt?: Date;

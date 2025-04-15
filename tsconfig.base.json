@@ -5,16 +5,17 @@
     "emitDeclarationOnly": true,
     "importHelpers": true,
     "isolatedModules": true,
-    "lib": ["es2022"],
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "lib": ["es2020", "dom"],
+    "module": "esnext",
+    "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": false,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strict": false,
     "target": "es2022"
-  }
+  },
+  "exclude": ["node_modules", "tmp"]
 }

@@ -5,6 +5,7 @@ import {
   DataType,
   PrimaryKey,
 } from 'sequelize-typescript';
+import { UsersStatus } from '../../../libs/enums';
 
 
 @Table({ tableName: 'users', paranoid: true })
@@ -45,7 +46,7 @@ export class User extends Model<User> {
     type: DataType.ENUM('CRIMINAL', 'LEGIT', 'PERSONA_NON_GRATA'),
     allowNull: true,
   })
-  status!: 'CRIMINAL' | 'LEGIT' | 'PERSONA_NON_GRATA';
+  status!: UsersStatus;
 
   @Column({
     type: DataType.BOOLEAN,

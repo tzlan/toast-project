@@ -2,36 +2,25 @@ import {
   Column,
   Model,
   Table,
-  DataType,
   PrimaryKey,
   ForeignKey,
   BelongsTo,
+  Default,
 } from 'sequelize-typescript';
 import { User } from '../../users/entities/user.entity';
+import { DataTypes } from 'sequelize';
 
-interface ToastAttributes {
-  id: string;
-  userId: string;
-  description: string;
-  date: Date;
-  statusToast: 'CANCELED' | 'DELAYED' | 'ON TIME';
-  place: string;
-}
 @Table({ tableName: 'toasts', paranoid: true })
-export class Toast extends Model<ToastAttributes> {
-
+export class Toast extends Model<Toast> {
   @PrimaryKey
-  @Column({
-    type: DataType.UUID,
-    defaultValue: DataType.UUIDV4,
-  })
+  @Default(DataTypes.UUIDV4)
+  @Column(DataTypes.UUID)
   id!: string;
 
   @ForeignKey(() => User)
   @Column({
-    type: DataType.UUID,
+    type: DataTypes.UUID,
     allowNull: false,
-    field: 'user_id',
   })
   userId!: string;
 
@@ -39,30 +28,26 @@ export class Toast extends Model<ToastAttributes> {
   user!: User;
 
   @Column({
-    type: DataType.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
-    field: 'description',
   })
   description!: string;
 
   @Column({
-    type: DataType.DATE,
+    type: DataTypes.DATE,
     allowNull: false,
-    field: 'date',
   })
   date!: Date;
 
   @Column({
-    type: DataType.ENUM('CANCELED', 'DELAYED', 'ON TIME'),
+    type: DataTypes.ENUM('CANCELED', 'DELAYED', 'ON TIME'),
     allowNull: false,
-    field: 'status_of_toast',
   })
-  statusToast!: 'CANCELED' | 'DELAYED' | 'ON TIME';
+  toastStatus!: 'CANCELED' | 'DELAYED' | 'ON TIME';
 
   @Column({
-    type: DataType.STRING,
+    type: DataTypes.STRING,
     allowNull: false,
-    field: 'place',
   })
   place!: string;
 }

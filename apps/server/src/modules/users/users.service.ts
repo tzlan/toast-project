@@ -14,9 +14,7 @@ export class UsersService {
     return this.userModel.findAll({});
   }
 
-  async findOneUser(id: string): Promise<User | null> {
-    return this.userModel.findByPk(id, {
-      include: [{ model: User, as: 'user' }],
-    });
+  async findUserById(id: string): Promise<User | null> {
+    return this.userModel.findByPk(id);
   }
 }
