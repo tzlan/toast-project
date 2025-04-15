@@ -5,21 +5,24 @@ import {
   PrimaryKey,
   ForeignKey,
   BelongsTo,
-  Default,
+  DataType,
 } from 'sequelize-typescript';
 import { User } from '../../users/entities/user.entity';
-import { DataTypes } from 'sequelize';
+
+
 
 @Table({ tableName: 'toasts', paranoid: true })
 export class Toast extends Model<Toast> {
   @PrimaryKey
-  @Default(DataTypes.UUIDV4)
-  @Column(DataTypes.UUID)
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+  })
   id!: string;
 
   @ForeignKey(() => User)
   @Column({
-    type: DataTypes.UUID,
+    type: DataType.UUID,
     allowNull: false,
   })
   userId!: string;
@@ -28,25 +31,25 @@ export class Toast extends Model<Toast> {
   user!: User;
 
   @Column({
-    type: DataTypes.STRING,
+    type: DataType.STRING,
     allowNull: false,
   })
   description!: string;
 
   @Column({
-    type: DataTypes.DATE,
+    type: DataType.DATE,
     allowNull: false,
   })
   date!: Date;
 
   @Column({
-    type: DataTypes.ENUM('CANCELED', 'DELAYED', 'ON TIME'),
+    type: DataType.ENUM('CANCELED', 'DELAYED', 'ON TIME'),
     allowNull: false,
   })
   toastStatus!: 'CANCELED' | 'DELAYED' | 'ON TIME';
 
   @Column({
-    type: DataTypes.STRING,
+    type: DataType.STRING,
     allowNull: false,
   })
   place!: string;
