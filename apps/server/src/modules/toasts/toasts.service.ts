@@ -5,7 +5,6 @@ import { Toast } from './entities/toast.entity';
 import { User } from '../users';
 import { ToastDto } from './dto/toast.dto';
 
-
 @Injectable()
 export class ToastsService {
   constructor(
@@ -19,9 +18,7 @@ export class ToastsService {
     });
 
     return toasts.map((toast) =>
-      plainToInstance(ToastDto, toast.get({ plain: true }), {
-        excludeExtraneousValues: true,
-      })
+      plainToInstance(ToastDto, toast.get({ plain: true }), {})
     );
   }
 }
