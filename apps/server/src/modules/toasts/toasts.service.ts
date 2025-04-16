@@ -18,7 +18,8 @@ export class ToastsService {
     });
 
     return toasts.map((toast) =>
-      plainToInstance(ToastDto, toast.get({ plain: true }), {})
+      plainToInstance(ToastDto, toast.get({ plain: true }), {
+      })
     );
   }
 }
