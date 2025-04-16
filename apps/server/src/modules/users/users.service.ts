@@ -21,7 +21,7 @@ export class UsersService {
     return plainToClass<UserDto, User>(UserDto, user, {});
   }
 
-  async findUserById(id: string): Promise<User | null> {
-    return this.userModel.findByPk(id);
-  }
+ 
+
+
 }
