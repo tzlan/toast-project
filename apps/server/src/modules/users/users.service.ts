@@ -2,6 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { UserDto } from './dto/users.dto';
+import { CreateUserDto } from './dto/create-user.dto';
+import { plainToClass } from 'class-transformer';
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
@@ -14,7 +17,17 @@ export class UsersService {
     return this.userModel.findAll({});
   }
 
-  async findUserById(id: string): Promise<User | null> {
-    return this.userModel.findByPk(id);
+  async createUser(createUserDto: CreateUserDto): Promise<UserDto> {
+    const user = await this.userModel.create(createUserDto);
+    return plainToClass<UserDto, User>(UserDto, user, {});
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    const user = await this.userModel.findOne({ where: { id } });
+    user
+      ? await user.destroy()
+      : (() => {
+          throw new NotFoundException(`User with ID ${id} not found`);
+        })();
   }
 }
