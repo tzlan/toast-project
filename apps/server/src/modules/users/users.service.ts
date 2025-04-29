@@ -21,7 +21,10 @@ export class UsersService {
     return plainToClass<UserDto, User>(UserDto, user, {});
   }
 
- 
+  async deleteUser(id: string): Promise<void> {
+    const user = await this.userModel.findOne({ where: { id } });
+    if (user) await user.destroy();
 
-
+    
+  }
 }
