@@ -1,4 +1,4 @@
-import {Body,Controller,Delete,Get,HttpCode,Param,Post,} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ToastsService } from './toasts.service';
 import { ToastDto } from './dto/toast.dto';
 
@@ -17,10 +17,7 @@ export class ToastsController {
   }
 
   @Delete(':id')
-  @HttpCode(204)
   async deleteToast(@Param('id') id: string): Promise<void> {
     await this.toastsService.deleteToast(id);
   }
-
-
 }

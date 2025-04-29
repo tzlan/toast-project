@@ -17,7 +17,6 @@ export class ToastsService {
     const toasts = await this.toastModel.findAll({
       include: [{ model: User, as: 'user' }],
     });
-
     return toasts.map((toast) =>
       plainToInstance(ToastDto, toast.get({ plain: true }), {})
     );
@@ -33,4 +32,5 @@ export class ToastsService {
     if (toast) await toast.destroy();
     
   }
+
 }

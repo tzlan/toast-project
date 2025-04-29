@@ -11,7 +11,7 @@ export class CreateToastDto {
   date!: Date;
 
   @IsString()
-  place?: string;
+  place!: string;
 
   @IsString()
   userId!: string;

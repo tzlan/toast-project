@@ -4,6 +4,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { UserDto } from './dto/users.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { plainToClass } from 'class-transformer';
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
@@ -23,8 +24,10 @@ export class UsersService {
 
   async deleteUser(id: string): Promise<void> {
     const user = await this.userModel.findOne({ where: { id } });
-    if (user) await user.destroy();
-
-    
+    user
+      ? await user.destroy()
+      : (() => {
+          throw new NotFoundException(`User with ID ${id} not found`);
+        })();
   }
 }
