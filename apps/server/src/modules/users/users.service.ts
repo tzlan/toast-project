@@ -5,6 +5,7 @@ import { UserDto } from './dto/users.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { plainToClass } from 'class-transformer';
 import { NotFoundException } from '@nestjs/common';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
@@ -25,9 +26,24 @@ export class UsersService {
   async deleteUser(id: string): Promise<void> {
     const user = await this.userModel.findOne({ where: { id } });
     user
-      ? await user.destroy()
+      ? user.destroy().then(() => {
+          console.log('User deleted successfully');
+        })
       : (() => {
           throw new NotFoundException(`User with ID ${id} not found`);
         })();
   }
+
+  async adminEditUser( id: string, updateUserDto: UpdateUserDto): Promise<UserDto> {
+
+    const user = await this.userModel.findOne({ where: { id } });
+
+    if (!user) throw new NotFoundException(`User with this id : -- >  ${id} not find`);
+    
+    await user.update(updateUserDto);
+    return plainToClass<UserDto, User>(UserDto, user, {
+      excludeExtraneousValues: true,
+    });
+  }
 }
+

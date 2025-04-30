@@ -13,6 +13,7 @@ export class ToastsService {
     private toastModel: typeof Toast
   ) {}
 
+
   async findAll(): Promise<ToastDto[]> {
     const toasts = await this.toastModel.findAll({
       include: [{ model: User, as: 'user' }],
@@ -22,10 +23,13 @@ export class ToastsService {
     );
   }
 
+
+
   async createToast(toastDto: ToastDto): Promise<ToastDto> {
     const toast = await this.toastModel.create(toastDto);
     return plainToClass<ToastDto, Toast>(ToastDto, toast, {});
   }
+
 
   async deleteToast(id: string): Promise<void> {
     const toast = await this.toastModel.findOne({ where: { id } });
