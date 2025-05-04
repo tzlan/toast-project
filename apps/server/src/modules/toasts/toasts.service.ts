@@ -33,8 +33,7 @@ export class ToastsService {
 
   async deleteToast(id: string): Promise<void> {
     const toast = await this.toastModel.findOne({ where: { id } });
-    if (toast) await toast.destroy();
-    
+    if (toast) {await toast.destroy()};
   }
 
 }

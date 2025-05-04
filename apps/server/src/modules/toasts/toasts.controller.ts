@@ -12,7 +12,7 @@ export class ToastsController {
   }
 
   @Post('create')
-  async create(@Body() toastDto: ToastDto): Promise<ToastDto> {
+  create(@Body() toastDto: ToastDto): Promise<ToastDto> {
     return this.toastsService.createToast(toastDto);
   }
 

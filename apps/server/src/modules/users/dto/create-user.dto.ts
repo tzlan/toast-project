@@ -1,10 +1,6 @@
-import { IsString, IsNumber,} from 'class-validator';
-
+import { IsString, IsNumber } from 'class-validator';
 
 export class CreateUserDto {
-  @IsString()
-  id!: string;
-
   @IsNumber()
   soldierId!: number;
 
