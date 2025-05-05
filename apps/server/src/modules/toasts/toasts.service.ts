@@ -32,10 +32,14 @@ export class ToastsService {
     }
   }
 
-  async adminEditToast(
-    id: string,
-    UpdateToastDto: Partial<Toast>
-  ): Promise<Toast> {
-    throw new Error('Method not implemented.');
+  async adminEditToast( id: string, updateToastDto: Partial<Toast>): Promise<Toast> {
+    const toast = await this.toastModel.findOne({ where: { id } });
+
+    if (!toast) {
+      throw new NotFoundException(`Toast with this ID ${id} not found`);
+    }
+    await toast.update(updateToastDto);
+    return toast;
+  
   }
 }
