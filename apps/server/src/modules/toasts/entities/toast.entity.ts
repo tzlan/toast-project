@@ -54,4 +54,5 @@ export class Toast extends Model<Toast> {
     allowNull: false,
   })
   place!: string;
+  period: string;
 }

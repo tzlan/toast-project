@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -12,7 +13,7 @@ import { ToastsService } from './toasts.service';
 import { Toast } from './entities/toast.entity';
 
 @Controller('toasts')
- export class ToastsController {
+export class ToastsController {
   constructor(private readonly toastsService: ToastsService) {}
 
   @Get('')
@@ -37,4 +38,23 @@ import { Toast } from './entities/toast.entity';
   ): Promise<Toast> {
     return this.toastsService.adminEditToast(id, toastData);
   }
+
+  @Get('personal-record/:userId')
+  async getPersonalRecord(@Param('userId') userId: string): Promise<number> {
+    try {
+      return await this.toastsService.getPersonalRecord(userId);
+    } catch (error) {
+      throw new NotFoundException(
+        error.message || 'Error fetching personal record'
+      );
+    }
+  }
+
+  @Get('all-time-record')
+  async getAllTimeRecord(): Promise<{ count: number }> {
+    const count = await this.toastsService.getAllTimeRecord();
+    return { count };
+  }
+  
 }
+
