@@ -41,12 +41,15 @@ export class UsersController {
 
   @Post('login')
   async login(
-    @Body() loginUserDto: LoginUserDto,
-  ): Promise<{ success: boolean; user?: User; }> {
+    @Body() loginUserDto: LoginUserDto
+  ): Promise<{ success: boolean; user?: User }> {
     try {
-      return await this.usersService.login(loginUserDto.soldierId, loginUserDto.password);
+      return await this.usersService.login(
+        loginUserDto.soldierId,
+        loginUserDto.password
+      );
     } catch (error) {
-      throw new UnauthorizedException(error.message || 'Failed to login');
+      throw new UnauthorizedException(error.message + ' Failed to login');
     }
   }
 }

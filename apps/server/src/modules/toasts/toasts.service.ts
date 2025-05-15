@@ -1,14 +1,20 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Op } from 'sequelize';
+
 import { InjectModel } from '@nestjs/sequelize';
 import { Toast } from './entities/toast.entity';
 import { User } from '../users';
 import { ToastDto } from './dto/toast.dto';
-import { fn, col, literal } from 'sequelize';
+import { fn, literal, where, Op, col } from 'sequelize';
+
+interface PeriodRecord {
+  year?: number;
+  period?: string;
+  count?: number;
+}
 
 @Injectable()
 export class ToastsService {
-  sequelize: any;
+  sequelize: { fn: any; col: any; literal: any };
   constructor(
     @InjectModel(Toast)
     private toastModel: typeof Toast
@@ -84,9 +90,34 @@ export class ToastsService {
 
     return count;
   }
-        
+
+  async getCurrentRecord(): Promise<number> {
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const currentMonth = now.getMonth() + 1;
+
+    const dateControlMore7 = currentMonth >= 7;
+
+    const count = await this.toastModel.count({
+      where: {
+        [Op.and]: [
+          where(fn('EXTRACT', literal('YEAR FROM "date"')), currentYear),
+          dateControlMore7
+            ? where(fn('EXTRACT', literal('MONTH FROM "date"')), {
+                [Op.gte]: 7,
+              })
+            : where(fn('EXTRACT', literal('MONTH FROM "date"')), {
+                [Op.lt]: 7,
+              }),
+        ],
+      },
+    });
+
+    return count;
+  }
+
   async getAllTimeRecord(): Promise<number> {
-    const results = await this.toastModel.findAll({
+    const results: PeriodRecord[] = await this.toastModel.findAll({
       attributes: [
         [fn('EXTRACT', literal('YEAR FROM "date"')), 'year'],
         [
@@ -98,17 +129,15 @@ export class ToastsService {
           `),
           'period',
         ],
-        [fn('COUNT', col('id')), 'total'],
+        [fn('COUNT', col('id')), 'count'],
       ],
       group: ['year', 'period'],
-      order: [[fn('COUNT', col('id')), 'DESC']],
+      order: [[literal('count'), 'DESC']],
       limit: 1,
-      raw: true, 
-    }) as unknown as Array<{ year: number | string; period: string; total: number | string }>;
+      raw: true,
+    });
 
-    return results.length > 0 ? Number(results[0].total) : 0;
+    console.log('Results:', results);
+    return results.length > 0 ? Number(results[0].count) : 0;
   }
 }
-
-
-
