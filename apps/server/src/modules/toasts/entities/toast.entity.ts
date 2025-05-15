@@ -47,21 +47,7 @@ export class Toast extends Model<Toast> {
   })
   toastStatus!: 'CANCELED' | 'DELAYED' | 'ON TIME';
 
-  // @Column({
-  //   type: DataType.STRING,
-  //   allowNull: false,
-  // })
   year?: number;
-
-  // @Column({
-  //   type: DataType.STRING,
-  //   allowNull: false,
-  // })
   period?: string;
-
-  // @Column({
-  //   type: DataType.STRING,
-  //   allowNull: false,
-  // })
-count?: number;
+  count?: number;
 }
