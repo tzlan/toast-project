@@ -9,6 +9,7 @@ import {
   Put,
 } from '@nestjs/common';
 import { ToastsService } from './toasts.service';
+import { PersonalRecordNotFoundException } from './exceptions/personal-record-not-found.exception';
 
 import { Toast } from './entities/toast.entity';
 
@@ -44,21 +45,37 @@ export class ToastsController {
     try {
       return await this.toastsService.getPersonalRecord(userId);
     } catch (error) {
-      throw new NotFoundException(
-        error.message || 'Error fetching personal record'
-      );
+      if (error instanceof PersonalRecordNotFoundException) {
+        throw error;
+      } else {
+        throw new NotFoundException(
+          error.message || 'Error fetching personal record'
+        );
+      }
     }
   }
 
   @Get('all-time-record')
   async getAllTimeRecord(): Promise<{ count: number }> {
-    const count = await this.toastsService.getAllTimeRecord();
-    return { count };
+    try {
+      const count = await this.toastsService.getAllTimeRecord();
+      return { count };
+    } catch (error) {
+      throw new NotFoundException(
+        error.message || 'Error fetching all-time record'
+      );
+    }
   }
 
   @Get('current-record')
-  async getCurrentRecord(): Promise<{ count: number }> {
-    const count = await this.toastsService.getCurrentRecord();
-    return { count };
+  async getCurrentRecord(): Promise<{ toastCountInPeriod: number }> {
+    try {
+      const toastCountInPeriod = await this.toastsService.getCurrentRecord();
+      return { toastCountInPeriod };
+    } catch (error) {
+      throw new NotFoundException(
+        error.message || 'Error fetching current record'
+      );
+    }
   }
 }

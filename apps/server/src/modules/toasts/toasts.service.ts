@@ -14,7 +14,7 @@ interface PeriodRecord {
 
 @Injectable()
 export class ToastsService {
-  sequelize: { fn: any; col: any; literal: any };
+
   constructor(
     @InjectModel(Toast)
     private toastModel: typeof Toast
@@ -73,7 +73,7 @@ export class ToastsService {
 
     const count = await this.toastModel.count({
       where: {
-        userId: userId,
+        userId,
         date: {
           [Op.between]: [startPhase, endPhase],
         },
@@ -96,13 +96,13 @@ export class ToastsService {
     const currentYear = now.getFullYear();
     const currentMonth = now.getMonth() + 1;
 
-    const dateControlMore7 = currentMonth >= 7;
+    const dateMax7Mounth = currentMonth >= 7;
 
-    const count = await this.toastModel.count({
+    const toastCountInPeriod = await this.toastModel.count({
       where: {
         [Op.and]: [
           where(fn('EXTRACT', literal('YEAR FROM "date"')), currentYear),
-          dateControlMore7
+          dateMax7Mounth
             ? where(fn('EXTRACT', literal('MONTH FROM "date"')), {
                 [Op.gte]: 7,
               })
@@ -113,7 +113,7 @@ export class ToastsService {
       },
     });
 
-    return count;
+    return toastCountInPeriod;
   }
 
   async getAllTimeRecord(): Promise<number> {
@@ -137,7 +137,6 @@ export class ToastsService {
       raw: true,
     });
 
-    console.log('Results:', results);
     return results.length > 0 ? Number(results[0].count) : 0;
   }
 }

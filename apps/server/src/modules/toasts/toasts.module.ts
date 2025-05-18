@@ -5,7 +5,7 @@ import { ToastsService } from './toasts.service';
 import { ToastsController } from './toasts.controller';
 
 @Module({
-  imports: [SequelizeModule.forFeature([Toast]), SequelizeModule],
+  imports: [SequelizeModule.forFeature([Toast])],
   providers: [ToastsService],
   controllers: [ToastsController],
 })
