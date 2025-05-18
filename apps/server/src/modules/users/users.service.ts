@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class UsersService {
+ 
   constructor(
     @InjectModel(User)
     private userModel: typeof User
@@ -37,4 +38,19 @@ export class UsersService {
     await user.update(updateUserDto);
     return user;
   }
+
+  async login(soldierId: number, password: string): Promise<{ success: boolean; user: User; }> {
+    const user = await this.userModel.findOne({ where: { soldierId } });
+
+    if (!user) {throw new UnauthorizedException('User not found');}
+    if (user.password !== password) {throw new UnauthorizedException('Password is wrong');}
+  
+    return { success: true, user };
+  }
+
+  
+
+
+
+
 }

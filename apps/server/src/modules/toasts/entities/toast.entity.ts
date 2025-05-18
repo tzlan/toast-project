@@ -9,8 +9,6 @@ import {
 } from 'sequelize-typescript';
 import { User } from '../../users/entities/user.entity';
 
-
-
 @Table({ tableName: 'toasts', paranoid: true })
 export class Toast extends Model<Toast> {
   @PrimaryKey
@@ -49,9 +47,7 @@ export class Toast extends Model<Toast> {
   })
   toastStatus!: 'CANCELED' | 'DELAYED' | 'ON TIME';
 
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  place!: string;
+  year?: number;
+  period?: string;
+  count?: number;
 }
