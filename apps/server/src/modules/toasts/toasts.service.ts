@@ -140,3 +140,4 @@ export class ToastsService {
     return results.length > 0 ? Number(results[0].count) : 0;
   }
 }
+
