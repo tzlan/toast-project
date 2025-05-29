@@ -11,18 +11,19 @@ import {
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('')
+  @Get()
   async findAllUsers(): Promise<User[]> {
     return this.usersService.findAllUsers();
   }
 
-  @Post('create')
-  async create(@Body() userData: Partial<User>): Promise<User> {
+  @Post()
+  async create(@Body() userData: CreateUserDto): Promise<User> {
     return this.usersService.createUser(userData);
   }
 

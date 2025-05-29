@@ -2,9 +2,6 @@ import { IsString, IsDate } from 'class-validator';
 
 export class CreateToastDto {
   @IsString()
-  id!: string;
-
-  @IsString()
   description!: string;
 
   @IsDate()
@@ -15,5 +12,4 @@ export class CreateToastDto {
 
   @IsString()
   userId!: string;
-  
 }

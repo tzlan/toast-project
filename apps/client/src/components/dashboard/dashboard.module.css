@@ -1,5 +1,5 @@
 .container {
-  min-height: 100vh;
+  min-height: 130vh;
   justify-content: flex-start;
   padding: 2rem;
   display: flex;
@@ -84,12 +84,7 @@
 }
 
 .selectedRow {
-  background: rgba(
-    255,
-    255,
-    255,
-    0.1
-  ); 
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .selectedButton {
@@ -112,3 +107,5 @@
 .confirmButton:hover {
   background: var(--purple-main-page);
 }
+
+
