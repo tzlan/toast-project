@@ -1,27 +1,16 @@
-// client/src/store.ts
-
 import { configureStore } from '@reduxjs/toolkit';
-import { setupListeners } from '@reduxjs/toolkit/query';
-import { toastsApi } from './store/api/toasts.api';  
-import { usersApi } from './store/api/users.api';    
+import { api } from './store/api/api';
+
+import './store/api/toasts.api';
+import './store/api/users.api';
 
 export const store = configureStore({
   reducer: {
-    
-    [toastsApi.reducerPath]: toastsApi.reducer,  
-    [usersApi.reducerPath]: usersApi.reducer,   
-    
+    [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware()
-       
-      .concat(toastsApi.middleware)  
-      .concat(usersApi.middleware),    
+    getDefaultMiddleware().concat(api.middleware),
 });
 
-
-setupListeners(store.dispatch);
-
- 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
