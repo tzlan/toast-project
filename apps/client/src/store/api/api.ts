@@ -1,22 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const api = createApi({
-  reducerPath: 'api', 
+  reducerPath: 'serverApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/api/', 
+    baseUrl: 'http://localhost:3000/api/',
   }),
-  endpoints: (builder) => ({
-    getUsers: builder.query({
-      query: () => 'users',
-    }),
-    createUser: builder.mutation({
-      query: (userData) => ({
-        url: 'users',
-        method: 'POST',
-        body: userData,
-      }),
-    }),
-  }),
+  endpoints: () => ({}),
 });
-
-export const { useGetUsersQuery, useCreateUserMutation } = api;

@@ -2,7 +2,7 @@ import React from 'react';
 import { Navigation } from '../navigation/navigation';
 import styles from './dashboard.module.css';
 import { useGetToastsQuery } from '../../store/api/toasts.api';
-import { Toast } from '../../store/api/toasts.api';
+import { Toast } from '../../types/toast';
 
 const renderTableRows = (toasts: Toast[]) => {
   if (!toasts || toasts.length === 0) {
@@ -27,7 +27,7 @@ export const Dashboard: React.FC = () => {
       <div>
         <Navigation />
         <div className={styles.container}>
-          <h1 className={styles.title}>Charging of toasts... ⏳</h1>
+          <h1 className={styles.title}>Loading ... ⏳</h1>
           <p>Wait please</p>
         </div>
       </div>

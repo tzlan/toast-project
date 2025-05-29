@@ -1,30 +1,11 @@
+import { api } from './api';
+import {CreateUserDto , User} from '../../types/users'
 
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-
-
-export interface User {
-  id: string;
-  email: string;
-
-}
-
-
-export interface CreateUserDto {
-  email: string;
-}
-
-
-export const usersApi = createApi({ 
-  reducerPath: 'usersApi', 
-  baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3000/api/', 
-  }),
+export const usersApi = api.injectEndpoints({
   endpoints: (builder) => ({
-   
     getUsers: builder.query<User[], void>({
       query: () => 'users',
     }),
-   
     createUser: builder.mutation<User, CreateUserDto>({
       query: (userData) => ({
         url: 'users',
@@ -32,9 +13,8 @@ export const usersApi = createApi({
         body: userData,
       }),
     }),
-   
   }),
+  overrideExisting: false,
 });
-
 
 export const { useGetUsersQuery, useCreateUserMutation } = usersApi;
