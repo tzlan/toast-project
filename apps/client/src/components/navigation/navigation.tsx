@@ -18,8 +18,8 @@ export const Navigation: React.FC = () => {
               </NavLink>
             </NavigationMenuItem>
             <NavigationMenuItem className={styles.navItem}>
-              <NavLink to="/admin-new-toast" className={styles.navLink}>
-                Admin New Toast
+              <NavLink to="/past-toast" className={styles.navLink}>
+                Past Toast
               </NavLink>
             </NavigationMenuItem>
             <NavigationMenuItem className={styles.navItem}>
@@ -27,6 +27,7 @@ export const Navigation: React.FC = () => {
                 Login
               </NavLink>
             </NavigationMenuItem>
+
 
             <NavigationMenuItem className={styles.navItem}>
               <NavLink to="/dashboard" className={styles.navLink}>
@@ -49,7 +50,6 @@ export const Navigation: React.FC = () => {
                 Admin DashBoard
               </NavLink>
             </NavigationMenuItem>
-           
           </NavigationMenuList>
         </NavigationMenu>
       </div>

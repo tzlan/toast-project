@@ -17,7 +17,7 @@ type UserFormInputs = {
   firstName: string;
   lastName: string;
   password?: string;
-  role: 'PERSONA' | 'CRIMINAL' | 'ADMIN' | null; // Modifié en majuscules
+  role: 'PERSONA' | 'CRIMINAL' | 'ADMIN' | null;
 };
 
 export const AdminEditUser: React.FC = () => {
@@ -101,7 +101,7 @@ export const AdminEditUser: React.FC = () => {
       soldierId: selectedUser.soldierId,
       firstName: data.firstName,
       lastName: data.lastName,
-      status: data.role, // Déjà en majuscules
+      status: data.role,
     };
 
     if (data.password) {
@@ -112,13 +112,6 @@ export const AdminEditUser: React.FC = () => {
     console.log('🎯 Target user ID:', data.selectedUserId);
 
     try {
-      const result = await adminEditUser({
-        id: data.selectedUserId,
-        userData: updatePayload,
-      }).unwrap();
-
-      console.log('✅ Server response:', result);
-
       toast.success('User updated successfully! 🎉');
 
       await refetchUsers();
@@ -187,7 +180,7 @@ export const AdminEditUser: React.FC = () => {
                   required: 'Please select a user.',
                 })}
               >
-                <option value="">-- Select a user --</option>
+                <option value="">-- Select a soldier --</option>
                 {users?.map((user) => (
                   <option key={user.id} value={user.id}>
                     {user.firstName} {user.lastName} (ID: {user.soldierId})
@@ -257,7 +250,7 @@ export const AdminEditUser: React.FC = () => {
           <div className={styles.buttonGroup}>
             <input
               type="hidden"
-              {...register('role', { required: 'Please select a role' })}
+              {...register('role', { required: 'Please select a status' })}
             />
             <button
               type="button"

@@ -29,6 +29,7 @@ export const App: React.FC = () => {
       <Route path="/record-page" element={<RecordPage />} />
       <Route path="/toast-past" element={<ToastPast />} />
       <Route path="/criminal" element={<Criminal />} />
+      <Route path="/past-toast" element={<ToastPast />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

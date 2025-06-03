@@ -4,9 +4,8 @@ export interface User {
   soldierId: number;
   password?: string;
   familyNameSoldier: string;
-  lastName?: string; 
+  lastName?: string;
   firstName?: string;
-
   personalName: string;
   role: 'persona' | 'criminal' | 'admin';
   status?: string;
@@ -18,12 +17,10 @@ export interface User {
 }
 
 export interface CreateUserDto {
-  email: string;
-  soldierId: number;
+  soldierId: number; 
+  firstName: string;
+  lastName: string;
   password: string;
-  familyNameSoldier: string;
-  personalName: string;
-  role: 'persona' | 'criminal' | 'admin';
 }
 
 export interface LoginCredentials {
