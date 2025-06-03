@@ -1,49 +1,149 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from './admin-edit-user.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { Navigation } from '../navigation/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import {
+  useAdminEditUserMutation,
+  useGetUsersQuery,
+} from '../../store/api/users.api';
+import { User } from '../../types/users';
+
 type UserFormInputs = {
-  idSoldier: string;
-  familyNameSoldier: string;
-  personalName: string;
-  password: string;
-  role: string | null;
+  selectedUserId: string;
+  firstName: string;
+  lastName: string;
+  password?: string;
+  role: 'PERSONA' | 'CRIMINAL' | 'ADMIN' | null; // Modifié en majuscules
 };
 
-export const AdminEditUser = () => {
-  const notify = () => toast('User updated!');
+export const AdminEditUser: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [selectedButton, setSelectedButton] = useState<string | null>(null);
-  const [idSoldier, setIdSoldier] = useState('');
+  const [selectedButton, setSelectedButton] =
+    useState<UserFormInputs['role']>(null);
+
+  const {
+    data: users,
+    isLoading: areUsersLoading,
+    isError: isUsersError,
+    refetch: refetchUsers,
+  } = useGetUsersQuery();
+  const [adminEditUser, { isLoading: isUpdatingUser }] =
+    useAdminEditUserMutation();
 
   const {
     register,
     handleSubmit,
     setValue,
+    reset,
+    watch,
     formState: { errors },
   } = useForm<UserFormInputs>({
     defaultValues: {
-      idSoldier: '',
-      familyNameSoldier: '',
-      personalName: '',
+      selectedUserId: '',
+      firstName: '',
+      lastName: '',
       password: '',
       role: null,
     },
   });
 
-  const onSubmit: SubmitHandler<UserFormInputs> = (data) => {
-    notify();
+  const selectedUserIdValue = watch('selectedUserId');
+
+  useEffect(() => {
+    if (selectedUserIdValue && users) {
+      const userToEdit = users.find((user) => user.id === selectedUserIdValue);
+      if (userToEdit) {
+        setValue('firstName', userToEdit.firstName);
+        setValue('lastName', userToEdit.lastName);
+        // Conversion du rôle en majuscules si nécessaire
+        const roleUpperCase =
+          userToEdit.role?.toUpperCase() as UserFormInputs['role'];
+        setValue('role', roleUpperCase);
+        setSelectedButton(roleUpperCase);
+      }
+    } else {
+      reset({
+        selectedUserId: '',
+        firstName: '',
+        lastName: '',
+        password: '',
+        role: null,
+      });
+      setSelectedButton(null);
+    }
+  }, [selectedUserIdValue, users, setValue, reset]);
+
+  const onSubmit: SubmitHandler<UserFormInputs> = async (data) => {
+    console.log('🔍 Form data submitted:', data);
+
+    if (!data.selectedUserId) {
+      toast.error('Please select a user to modify.');
+      return;
+    }
+    if (!data.role) {
+      toast.error('Please select a role.');
+      return;
+    }
+
+    const selectedUser = users?.find((user) => user.id === data.selectedUserId);
+    console.log('👤 Selected user:', selectedUser);
+
+    if (!selectedUser) {
+      toast.error("The selected user's data was not found.");
+      return;
+    }
+
+    const updatePayload: Partial<User> = {
+      soldierId: selectedUser.soldierId,
+      firstName: data.firstName,
+      lastName: data.lastName,
+      status: data.role, // Déjà en majuscules
+    };
+
+    if (data.password) {
+      updatePayload.password = data.password;
+    }
+
+    console.log('📦 Update payload being sent:', updatePayload);
+    console.log('🎯 Target user ID:', data.selectedUserId);
+
+    try {
+      const result = await adminEditUser({
+        id: data.selectedUserId,
+        userData: updatePayload,
+      }).unwrap();
+
+      console.log('✅ Server response:', result);
+
+      toast.success('User updated successfully! 🎉');
+
+      await refetchUsers();
+
+      setTimeout(() => {
+        const updatedUser = users?.find((u) => u.id === data.selectedUserId);
+        console.log('🔄 User after refetch:', updatedUser);
+      }, 1000);
+
+      reset();
+      setSelectedButton(null);
+    } catch (error: any) {
+      console.error('❌ Error while updating user:', error);
+      console.error('❌ Error details:', error?.data);
+      const errorMessage =
+        error?.data?.message || 'Update failed. Please try again.';
+      toast.error(`Error: ${errorMessage}`);
+    }
   };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleButtonClick = (buttonType: string) => {
+  const handleButtonClick = (buttonType: UserFormInputs['role']) => {
     if (selectedButton === buttonType) {
       setSelectedButton(null);
       setValue('role', null, { shouldValidate: true });
@@ -57,71 +157,82 @@ export const AdminEditUser = () => {
     <div>
       <Navigation />
       <ToastContainer
-        position="bottom-left"
-        autoClose={4968}
+        position="top-right"
+        autoClose={5000}
         hideProgressBar={false}
         newestOnTop={false}
-        closeOnClick={false}
+        closeOnClick
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"
+        theme="light"
       />
       <div className={styles.container}>
-        <h1 className={styles.title}>Edit user ✍🏼</h1>
+        <h1 className={styles.title}>Edit User ✍🏼</h1>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <div className={styles.formGroup}>
-            <label htmlFor="idSoldier" className={styles.label}>
-              Soldier Id
+            <label htmlFor="selectedUser" className={styles.label}>
+              Select a user
             </label>
-            <input
-              type="text"
-              id="idSoldier"
-              value={idSoldier}
-              onChange={(e) => {
-                const value = e.target.value;
-                if (/^\d*$/.test(value)) {
-                  setIdSoldier(value);
-                  setValue('idSoldier', value, { shouldValidate: true });
-                }
-              }}
-              className={styles.input}
-              required
-            />
-
-            {errors.idSoldier && (
-              <span className={styles.error}>This field is required</span>
+            {areUsersLoading && <p>Loading users...</p>}
+            {isUsersError && (
+              <p className={styles.error}>Error loading users.</p>
+            )}
+            {!areUsersLoading && !isUsersError && (
+              <select
+                id="selectedUser"
+                className={styles.input}
+                {...register('selectedUserId', {
+                  required: 'Please select a user.',
+                })}
+              >
+                <option value="">-- Select a user --</option>
+                {users?.map((user) => (
+                  <option key={user.id} value={user.id}>
+                    {user.firstName} {user.lastName} (ID: {user.soldierId})
+                  </option>
+                ))}
+              </select>
+            )}
+            {errors.selectedUserId && (
+              <span className={styles.error}>
+                {errors.selectedUserId.message}
+              </span>
             )}
           </div>
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
-              <label htmlFor="familyNameSoldier" className={styles.label}>
+              <label htmlFor="firstName" className={styles.label}>
                 First Name
               </label>
               <input
                 type="text"
-                id="familyNameSoldier"
+                id="firstName"
                 className={styles.input}
-                {...register('familyNameSoldier', { required: true })}
+                {...register('firstName', {
+                  required: 'First name is required',
+                })}
               />
-              {errors.familyNameSoldier && (
-                <span className={styles.error}>This field is required</span>
+              {errors.firstName && (
+                <span className={styles.error}>{errors.firstName.message}</span>
               )}
             </div>
 
             <div className={styles.formGroup}>
-              <label htmlFor="personalName" className={styles.label}>
+              <label htmlFor="lastName" className={styles.label}>
                 Last Name
               </label>
               <input
                 type="text"
-                id="personalName"
+                id="lastName"
                 className={styles.input}
-                {...register('personalName', { required: true })}
+                {...register('lastName', {
+                  required: 'Last name is required',
+                })}
               />
-              {errors.personalName && (
-                <span className={styles.error}>This field is required</span>
+              {errors.lastName && (
+                <span className={styles.error}>{errors.lastName.message}</span>
               )}
             </div>
           </div>
@@ -133,25 +244,29 @@ export const AdminEditUser = () => {
               type={showPassword ? 'text' : 'password'}
               id="password"
               className={styles.input}
-              {...register('password', { required: true })}
+              {...register('password')}
             />
             <span className={styles.eye} onClick={togglePasswordVisibility}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
             {errors.password && (
-              <span className={styles.error}>This field is required</span>
+              <span className={styles.error}>{errors.password.message}</span>
             )}
           </div>
 
           <div className={styles.buttonGroup}>
+            <input
+              type="hidden"
+              {...register('role', { required: 'Please select a role' })}
+            />
             <button
               type="button"
               className={`${styles.buttonAdmin} ${
-                selectedButton === 'persona'
+                selectedButton === 'PERSONA'
                   ? styles.buttonGray
                   : styles.buttonRed
               }`}
-              onClick={() => handleButtonClick('persona')}
+              onClick={() => handleButtonClick('PERSONA')}
             >
               Persona
             </button>
@@ -159,11 +274,11 @@ export const AdminEditUser = () => {
             <button
               type="button"
               className={`${styles.buttonAdmin} ${
-                selectedButton === 'criminal'
+                selectedButton === 'CRIMINAL'
                   ? styles.buttonGray
                   : styles.buttonYellow
               }`}
-              onClick={() => handleButtonClick('criminal')}
+              onClick={() => handleButtonClick('CRIMINAL')}
             >
               Criminal
             </button>
@@ -171,14 +286,21 @@ export const AdminEditUser = () => {
             <button
               type="button"
               className={`${styles.buttonAdmin} ${styles.buttonOrange}`}
-              onClick={() => handleButtonClick('admin')}
+              onClick={() => handleButtonClick('ADMIN')}
             >
               Admin
             </button>
           </div>
+          {errors.role && (
+            <span className={styles.error}>{errors.role.message}</span>
+          )}
 
-          <button type="submit" className={styles.button}>
-            Update
+          <button
+            type="submit"
+            className={styles.button}
+            disabled={isUpdatingUser || areUsersLoading}
+          >
+            {isUpdatingUser ? 'Updating...' : 'Update'}
           </button>
         </form>
       </div>

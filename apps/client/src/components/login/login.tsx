@@ -1,14 +1,47 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import styles from './login.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useLoginMutation } from '../../store/api/users.api';
+import { AxiosError } from 'axios';
 
 export const Login = () => {
   const [idSoldier, setIdSoldier] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {};
+  const navigate = useNavigate();
+  const [login, { isLoading, isError, error, isSuccess }] = useLoginMutation();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorMessage(null);
+
+    try {
+      const result = await login({
+        soldierId: parseInt(idSoldier),
+        password,
+      }).unwrap();
+      if (result.success) { navigate('/dashboard');} 
+      else {setErrorMessage('Login failed. Please check your credentials.');}
+    } catch (err) {
+
+      if (isError) {
+        const apiError = error as AxiosError;
+        if (apiError.response && apiError.response.data) {
+          setErrorMessage(
+            (apiError.response.data as { message: string }).message ||
+              'An unexpected error occurred.'
+          );
+        } else {
+          setErrorMessage('Could not connect to the server. Please try again.');
+        }
+      } else {
+        setErrorMessage('An unknown error occurred during login.');
+      }
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -49,8 +82,16 @@ export const Login = () => {
           </span>
         </div>
 
-        <button type="submit" className={styles.button}>
-          Login
+        {isLoading && <p className={styles.loadingMessage}>Logging in...</p>}
+        {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
+        {isSuccess && !errorMessage && (
+          <p className={styles.successMessage}>
+            Login successful! Redirecting...
+          </p>
+        )}
+
+        <button type="submit" className={styles.button} disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Login'}
         </button>
 
         <div className={styles.createAccount}>
