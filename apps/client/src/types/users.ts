@@ -1,14 +1,15 @@
+import { ToastStatus } from "../lib/toasts-status.enum";
+
 export interface User {
   id: string;
   email: string;
   soldierId: number;
   password?: string;
   familyNameSoldier: string;
-  lastName?: string; 
+  lastName?: string;
   firstName?: string;
-
   personalName: string;
-  role: 'persona' | 'criminal' | 'admin';
+  role: ToastStatus;
   status?: string;
   isAdmin?: boolean;
   isStatusForced?: boolean;
@@ -18,12 +19,10 @@ export interface User {
 }
 
 export interface CreateUserDto {
-  email: string;
-  soldierId: number;
+  soldierId: number; 
+  firstName: string;
+  lastName: string;
   password: string;
-  familyNameSoldier: string;
-  personalName: string;
-  role: 'persona' | 'criminal' | 'admin';
 }
 
 export interface LoginCredentials {

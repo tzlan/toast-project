@@ -67,25 +67,86 @@
   background: var(--gray-for-tab);
   transition: background 0.7s ease;
 }
+.actionsCell {
+  white-space: nowrap;
+}
+
+.actionsCell button {
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  margin-right: 3%;
+  transition: background 0.3s ease;
+}
+
+.editButton {
+  background-color: rgb(18, 120, 222);
+}
+
+.editButton:hover {
+  background-color: rgb(15, 95, 180);
+}
 
 .deleteButton {
-  padding: 0.5rem 1rem;
+  background-color: var(--red-for-button, red);
+}
+
+.deleteButton:hover {
+  background-color: var(--red-for-button, red);
+}
+
+.saveButton {
+  background-color: rgb(18, 218, 75);
+}
+
+.saveButton:hover {
+  background-color: rgb(15, 180, 60);
+}
+
+.cancelButton {
+  background-color: var(--gray-for-tab);
+  color: white;
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cancelButton:hover {
+  background-color: var(--gray-for-cellules-tab);
+}
+
+.confirmButton {
+  padding: 1rem 1rem;
   font-size: 0.9rem;
   color: white;
   background: var(--red-for-button, red);
   border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  padding: 1rem 1rem;
-  transition: background 0.3s ease;
-}
-
-.confirmButton {
-  padding: 0.5rem 1rem;
-  font-size: 0.9rem;
-  color: white;
-  background: var(--red-for-button, red);
   border-radius: 1rem;
   cursor: pointer;
   transition: background 0.3s ease;
+}
+
+.confirmButton:hover {
+  background-color: var(--red-for-button);
+}
+
+.inlineInput {
+  background-color: var(--color-label-blue, --white-all);
+  width: 9rem;
+  padding: 0.5rem;
+  border: 1% solid var (--white-for-imput);
+  border-radius: 1rem;
+  box-sizing: border-box;
+  margin-bottom: 15%;
+}
+
+.inlineInput:focus {
+  border-color: var(--blue-main-page);
+  outline: none;
 }

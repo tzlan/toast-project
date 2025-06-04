@@ -2,25 +2,54 @@ import React from 'react';
 import { Navigation } from '../navigation/navigation';
 import styles from './dashboard.module.css';
 import { useGetToastsQuery } from '../../store/api/toasts.api';
+import { useGetUsersQuery } from '../../store/api/users.api';
 import { Toast } from '../../types/toast';
+import { User } from '../../types/users';
 
-const renderTableRows = (toasts: Toast[]) => {
+const formatDate = (dateString: string) => {
+  const date = new Date(dateString);
+  const options: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hourCycle: 'h23',
+  };
+
+  return date.toLocaleString('en', options);
+};
+
+const renderTableRows = (toasts: Toast[], users: User[]) => {
   if (!toasts || toasts.length === 0) {
     return null;
   }
 
-  return toasts.map((toast) => (
-    <tr key={toast.id} className={styles.selectedRow}>
-      <td>{toast.userId}</td>
-      <td>{toast.date}</td>
-      <td>{toast.description}</td>
-      <td>{toast.toastStatus}</td>
-    </tr>
-  ));
+  const usersMap = new Map<string, User>();
+  users.forEach((user) => usersMap.set(user.id, user));
+
+  return toasts.map((toast) => {
+    const user = usersMap.get(toast.userId);
+    const userName = user
+      ? `${user.firstName} ${user.lastName}`
+      : 'Unknown User';
+
+    return (
+      <tr key={toast.id} className={styles.selectedRow}>
+        <td>{userName}</td>
+        <td>{formatDate(toast.date)}</td>
+        <td>{toast.description}</td>
+        <td>{toast.toastStatus}</td>
+      </tr>
+    );
+  });
 };
 
 export const Dashboard: React.FC = () => {
-  const { data: toasts, isLoading } = useGetToastsQuery();
+  const { data: toasts, isLoading: isLoadingToasts } = useGetToastsQuery();
+  const { data: users, isLoading: isLoadingUsers } = useGetUsersQuery();
+
+  const isLoading = isLoadingToasts || isLoadingUsers;
 
   if (isLoading) {
     return (
@@ -49,7 +78,7 @@ export const Dashboard: React.FC = () => {
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>{renderTableRows(toasts || [])}</tbody>
+            <tbody>{renderTableRows(toasts || [], users || [])}</tbody>
           </table>
           {(!toasts || toasts.length === 0) && (
             <p className={styles.noData}>0 toast found</p>

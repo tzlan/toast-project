@@ -1,6 +1,5 @@
 import { api } from './api';
-import { CreateToastDto, Toast} from '../../types/toast'
-
+import { CreateToastDto, Toast } from '../../types/toast';
 
 export const toastsApi = api.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,13 +13,22 @@ export const toastsApi = api.injectEndpoints({
         body: toastData,
       }),
     }),
+    getPastToasts: builder.query<Toast[], void>({
+      query: () => 'toasts/past',
+    }),
+    getFutureToasts: builder.query<Toast[], void>({
+      query: () => 'toasts/future',
+    }),
     deleteToast: builder.mutation<void, string>({
       query: (id) => ({
         url: `toasts/${id}`,
         method: 'DELETE',
       }),
     }),
-    adminEditToast: builder.mutation<Toast, { id: string; toastData: Partial<Toast> }>({
+    adminEditToast: builder.mutation<
+      Toast,
+      { id: string; toastData: Partial<Toast> }
+    >({
       query: ({ id, toastData }) => ({
         url: `toasts/${id}`,
         method: 'PUT',
@@ -48,5 +56,8 @@ export const {
   useGetPersonalRecordQuery,
   useGetAllTimeRecordQuery,
   useGetCurrentRecordQuery,
+  useGetPastToastsQuery,
+  useGetFutureToastsQuery,
 } = toastsApi;
+
 

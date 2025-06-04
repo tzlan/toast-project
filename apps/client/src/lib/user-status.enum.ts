@@ -1,0 +1,5 @@
+export enum UsersStatus {
+  CRIMINAL = 'CRIMINAL',
+  LEGIT = 'LEGIT',
+  PERSONA_NON_GRATA = 'PERSONA_NON_GRATA',
+}

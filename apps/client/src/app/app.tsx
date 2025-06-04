@@ -10,6 +10,7 @@ import {
 import { Routes, Route } from 'react-router-dom';
 import { NewToast } from '../components/new-toast';
 import { ToastPast } from '../components/toast-past';
+import { ToastFutur } from '../components/toast-futur';
 import { Criminal } from '../components/criminal';
 import { Dashboard } from '../components/dashboard';
 import { AdminDashboard } from '../components/admin-dashboard';
@@ -29,6 +30,8 @@ export const App: React.FC = () => {
       <Route path="/record-page" element={<RecordPage />} />
       <Route path="/toast-past" element={<ToastPast />} />
       <Route path="/criminal" element={<Criminal />} />
+      <Route path="/past-toast" element={<ToastPast />} />
+      <Route path="/toast-futur" element={<ToastFutur/>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
