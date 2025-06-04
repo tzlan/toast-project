@@ -27,6 +27,34 @@ export class ToastsService {
     return toasts;
   }
 
+  async findFutureToasts(): Promise<Toast[]> {
+    const now = new Date();
+    const toasts = await this.toastModel.findAll({
+      where: {
+        date: {
+          [Op.gte]: now,
+        },
+      },
+      include: [{ model: User, as: 'user' }],
+      order: [['date', 'ASC']],
+    });
+    return toasts;
+  }
+
+  async findPastToasts(): Promise<Toast[]> {
+    const now = new Date();
+    const toasts = await this.toastModel.findAll({
+      where: {
+        date: {
+          [Op.lt]: now,
+        },
+      },
+      include: [{ model: User, as: 'user' }],
+      order: [['date', 'DESC']],
+    });
+    return toasts;
+  }
+
   async createToast(toastData: CreateToastDto): Promise<Toast> {
     const toast = await this.toastModel.create(toastData);
     return toast;

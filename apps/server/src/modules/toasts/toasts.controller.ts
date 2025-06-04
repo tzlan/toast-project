@@ -68,6 +68,16 @@ export class ToastsController {
     }
   }
 
+  @Get('past') 
+  async findPast(): Promise<Toast[]> {
+    return this.toastsService.findPastToasts();
+  }
+
+  @Get('future')
+  async findFutureToasts(): Promise<Toast[]> {
+    return this.toastsService.findFutureToasts();
+  }
+
   @Get('current-record')
   async getCurrentRecord(): Promise<{ toastCountInPeriod: number }> {
     try {
