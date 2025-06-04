@@ -5,6 +5,7 @@ import { Toast } from './entities/toast.entity';
 import { User } from '../users';
 import { ToastDto } from './dto/toast.dto';
 import { fn, literal, where, Op, col } from 'sequelize';
+import { CreateToastDto } from './dto/create-toast.dto';
 
 interface PeriodRecord {
   year?: number;
@@ -14,7 +15,6 @@ interface PeriodRecord {
 
 @Injectable()
 export class ToastsService {
-
   constructor(
     @InjectModel(Toast)
     private toastModel: typeof Toast
@@ -27,7 +27,7 @@ export class ToastsService {
     return toasts;
   }
 
-  async createToast(toastData: Partial<Toast>): Promise<Toast> {
+  async createToast(toastData: CreateToastDto): Promise<Toast> {
     const toast = await this.toastModel.create(toastData);
     return toast;
   }

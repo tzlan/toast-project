@@ -12,18 +12,19 @@ import { ToastsService } from './toasts.service';
 import { PersonalRecordNotFoundException } from './exceptions/personal-record-not-found.exception';
 
 import { Toast } from './entities/toast.entity';
+import { CreateToastDto } from './dto/create-toast.dto';
 
 @Controller('toasts')
 export class ToastsController {
   constructor(private readonly toastsService: ToastsService) {}
 
-  @Get('')
+  @Get()
   async findAll(): Promise<Toast[]> {
     return this.toastsService.findAll();
   }
 
-  @Post('create')
-  async create(@Body() toastData: Partial<Toast>): Promise<Toast> {
+  @Post()
+  async create(@Body() toastData: CreateToastDto): Promise<Toast> {
     return this.toastsService.createToast(toastData);
   }
 

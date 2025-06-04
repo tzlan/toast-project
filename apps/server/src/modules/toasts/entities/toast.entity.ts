@@ -41,6 +41,12 @@ export class Toast extends Model<Toast> {
   date!: Date;
 
   @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  place!: string;
+
+  @Column({
     type: DataType.ENUM('CANCELED', 'DELAYED', 'ON TIME'),
     allowNull: false,
     defaultValue: 'ON TIME',

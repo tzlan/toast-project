@@ -1,56 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navigation } from '../navigation/navigation';
 import styles from './dashboard.module.css';
+import { useGetToastsQuery } from '../../store/api/toasts.api';
+import { Toast } from '../../types/toast';
 
-interface Entry {
-  id: number;
-  person: string;
-  date: string;
-  description: string;
-  status: string;
-}
+const renderTableRows = (toasts: Toast[]) => {
+  if (!toasts || toasts.length === 0) {
+    return null;
+  }
 
-const renderTableRows = (entries: Entry[]) => {
-  return entries.map((entry) => (
-    <tr key={entry.id} className={entry.id ? styles.selectedRow : ''}>
-      <td>{entry.person}</td>
-      <td>{entry.date}</td>
-      <td>{entry.description}</td>
-      <td>{entry.status}</td>
+  return toasts.map((toast) => (
+    <tr key={toast.id} className={styles.selectedRow}>
+      <td>{toast.userId}</td>
+      <td>{toast.date}</td>
+      <td>{toast.description}</td>
+      <td>{toast.toastStatus}</td>
     </tr>
   ));
 };
 
 export const Dashboard: React.FC = () => {
-  const [entries, setEntries] = useState<Entry[]>([
-    {
-      id: 1,
-      person: 'Tomer',
-      date: '1/01/2025',
-      description: 'Birthday of Tomer',
-      status: 'Pending',
-    },
-    {
-      id: 2,
-      person: 'Aurel',
-      date: '22/02/2025',
-      description: 'New job',
-      status: 'On time',
-    },
-    {
-      id: 3,
-      person: 'Ethan',
-      date: '15/03/2025',
-      description: 'Finish project',
-      status: 'Canceled',
-    },
-  ]);
+  const { data: toasts, isLoading } = useGetToastsQuery();
+
+  if (isLoading) {
+    return (
+      <div>
+        <Navigation />
+        <div className={styles.container}>
+          <h1 className={styles.title}>Loading ... ⏳</h1>
+          <p>Wait please</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
       <Navigation />
       <div className={styles.container}>
-        <h1 className={styles.title}>🍷 Welcome User of Golden Toast 🍪</h1>
+        <h1 className={styles.title}>🍷 Welcome user of Golden Toast 🍪</h1>
         <div className={styles.form}>
           <table className={styles.tab}>
             <thead>
@@ -61,8 +49,11 @@ export const Dashboard: React.FC = () => {
                 <th>Status</th>
               </tr>
             </thead>
-            <tbody>{renderTableRows(entries)}</tbody>
+            <tbody>{renderTableRows(toasts || [])}</tbody>
           </table>
+          {(!toasts || toasts.length === 0) && (
+            <p className={styles.noData}>0 toast found</p>
+          )}
         </div>
       </div>
     </div>

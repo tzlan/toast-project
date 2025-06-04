@@ -2,10 +2,10 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import { NotFoundException } from '@nestjs/common';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
- 
   constructor(
     @InjectModel(User)
     private userModel: typeof User
@@ -15,7 +15,7 @@ export class UsersService {
     return this.userModel.findAll({});
   }
 
-  async createUser(userData: Partial<User>): Promise<User> {
+  async createUser(userData: CreateUserDto): Promise<User> {
     const user = await this.userModel.create(userData);
     return user;
   }
@@ -39,18 +39,19 @@ export class UsersService {
     return user;
   }
 
-  async login(soldierId: number, password: string): Promise<{ success: boolean; user: User; }> {
+  async login(
+    soldierId: number,
+    password: string
+  ): Promise<{ success: boolean; user: User }> {
     const user = await this.userModel.findOne({ where: { soldierId } });
 
-    if (!user) {throw new UnauthorizedException('User not found');}
-    if (user.password !== password) {throw new UnauthorizedException('Password is wrong');}
-  
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+    if (user.password !== password) {
+      throw new UnauthorizedException('Password is wrong');
+    }
+
     return { success: true, user };
   }
-
-  
-
-
-
-
 }
