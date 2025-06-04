@@ -2,7 +2,7 @@ export interface Toast {
   id: string;
   userId: string;
   description: string;
-  date: string; // La date peut être une chaîne (ISO string) quand reçue du backend si elle est sérialisée
+  date: string; 
   toastStatus: 'CANCELED' | 'DELAYED' | 'ON TIME';
   place: string;
 }

@@ -1,12 +1,12 @@
 import React from 'react';
 import { Navigation } from '../navigation/navigation';
 import styles from './toast-past.module.css';
-import { useGetPastToastsQuery } from '../../store/api/toasts.api'; // Importe le hook pour les toasts passés
-import { useGetUsersQuery } from '../../store/api/users.api'; // Importe le hook pour les utilisateurs
-import { Toast } from '../../types/toast'; // Assurez-vous que le chemin est correct
-import { User } from '../../types/users'; // Assurez-vous que le chemin est correct
+import { useGetPastToastsQuery } from '../../store/api/toasts.api'; 
+import { useGetUsersQuery } from '../../store/api/users.api'; 
+import { Toast } from '../../types/toast';  
+import { User } from '../../types/users';  
 
-// Fonction pour formater la date (reprise de Dashboard.tsx)
+ 
 const formatDate = (dateString: string) => {
   const date = new Date(dateString);
   const options: Intl.DateTimeFormatOptions = {
@@ -25,20 +25,20 @@ const renderTableRows = (toasts: Toast[], users: User[]) => {
     return null;
   }
 
-  // Crée une map pour un accès rapide aux utilisateurs par leur ID
+
   const usersMap = new Map<string, User>();
   users.forEach(user => usersMap.set(user.id, user));
 
   return toasts.map((toast) => {
-    // Trouvez l'utilisateur correspondant au userId du toast
+   
     const user = usersMap.get(toast.userId);
-    // Affiche le nom et prénom, ou 'Utilisateur inconnu' si non trouvé
+    
     const userName = user ? `${user.firstName} ${user.lastName}` : 'Unknown User';
 
     return (
       <tr key={toast.id}>
-        <td>{userName}</td> {/* Affiche le nom et prénom de l'utilisateur */}
-        <td>{formatDate(toast.date)}</td> {/* Appelle la fonction de formatage de date */}
+        <td>{userName}</td>  
+        <td>{formatDate(toast.date)}</td>  
         <td>{toast.description}</td>
       </tr>
     );
@@ -46,13 +46,13 @@ const renderTableRows = (toasts: Toast[], users: User[]) => {
 };
 
 export const ToastPast: React.FC = () => {
-  const { data: toasts, isLoading: isLoadingToasts } = useGetPastToastsQuery(); // Récupère les toasts passés
-  const { data: users, isLoading: isLoadingUsers } = useGetUsersQuery(); // Récupère tous les utilisateurs
+  const { data: toasts, isLoading: isLoadingToasts } = useGetPastToastsQuery();  
+  const { data: users, isLoading: isLoadingUsers } = useGetUsersQuery();  
 
-  // Combine les états de chargement
+ 
   const isLoading = isLoadingToasts || isLoadingUsers;
 
-  // Affiche un message de chargement pendant la récupération des données
+  
   if (isLoading) {
     return (
       <div>
@@ -79,7 +79,7 @@ export const ToastPast: React.FC = () => {
                 <th>Description</th>
               </tr>
             </thead>
-            <tbody>{renderTableRows(toasts || [], users || [])}</tbody> {/* Passe les toasts et les utilisateurs */}
+            <tbody>{renderTableRows(toasts || [], users || [])}</tbody>  
           </table>
           {(!toasts || toasts.length === 0) && (
             <p className={styles.noData}>No past toasts found.</p>
