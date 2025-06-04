@@ -7,6 +7,7 @@ import { useGetUsersQuery } from '../../store/api/users.api';
 import { User } from '../../types/users';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastStatus } from '../../lib/toasts-status.enum';
 
 type NewToastFormInputs = {
   dateToast: string;
@@ -57,7 +58,7 @@ export const NewToast = () => {
       userId: data.shtiaMakerId,
       date: new Date(combinedDateTime),
       description: data.descriptionToast,
-      toastStatus: 'ON TIME',
+      toastStatus: ToastStatus.ON_TIME,
       place: data.place,
     };
 
@@ -112,7 +113,7 @@ export const NewToast = () => {
                   })}
                   className={styles.input}
                 >
-                  <option value="">-- Select a person --</option>
+                  <option value="">-- Select a USER --</option>
                   {users?.map((user: User) => (
                     <option key={user.id} value={user.id}>
                       {user.firstName} {user.lastName} (ID: {user.soldierId})
@@ -197,7 +198,7 @@ export const NewToast = () => {
             className={styles.button}
             disabled={isCreatingToast || areUsersLoading}
           >
-            {isCreatingToast ? 'Creating...' : 'New "toast" 🥳'}
+            {isCreatingToast ? 'Creating...' : 'New toast 🥳'}
           </button>
         </form>
       </div>

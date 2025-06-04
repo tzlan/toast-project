@@ -1,4 +1,3 @@
-
 import { Navigation } from '../navigation/navigation';
 import styles from './record-page.module.css';
 import {
@@ -8,17 +7,17 @@ import {
 } from '../../store/api/toasts.api';
 import { useGetUsersQuery } from '../../store/api/users.api';
 
-
-
-
 export const RecordPage = () => {
+  //TODO MAKE CURRENT USER ID DYNAMIC
   const currentUserId = '550e8400-e29b-41d4-a716-446655440003';
 
   const { data: personalRecord, isLoading: isLoadingPersonalRecord } =
     useGetPersonalRecordQuery(currentUserId, {
       skip: !currentUserId,
     });
-  const {data: currentPeriodRecordData,isLoading: isLoadingCurrentPeriodRecord,
+  const {
+    data: currentPeriodRecordData,
+    isLoading: isLoadingCurrentPeriodRecord,
   } = useGetCurrentRecordQuery();
   const { data: allTimeRecordData, isLoading: isLoadingAllTimeRecord } =
     useGetAllTimeRecordQuery();

@@ -1,3 +1,5 @@
+import { ToastStatus } from "../lib/toasts-status.enum";
+
 export interface User {
   id: string;
   email: string;
@@ -7,7 +9,7 @@ export interface User {
   lastName?: string;
   firstName?: string;
   personalName: string;
-  role: 'persona' | 'criminal' | 'admin';
+  role: ToastStatus;
   status?: string;
   isAdmin?: boolean;
   isStatusForced?: boolean;

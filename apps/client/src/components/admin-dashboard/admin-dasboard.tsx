@@ -11,6 +11,7 @@ import { Toast } from '../../types/toast';
 import { User } from '../../types/users';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ToastStatus } from '../../lib/toasts-status.enum';
 
 // Helper to format date
 const formatDate = (dateString: string): string => {
@@ -37,14 +38,14 @@ export const AdminDashboard: React.FC = () => {
   const [deleteToastMutation] = useDeleteToastMutation();
   const [adminEditToastMutation] = useAdminEditToastMutation();
 
-  const [editingToastId, setEditingToastId] = useState<string | null>(null);
+  const [editingToastId, setEditingToastId] = useState('');
   const [editedDescription, setEditedDescription] = useState('');
   const [editedDate, setEditedDate] = useState('');
   const [editedTime, setEditedTime] = useState('');
   const [editedPlace, setEditedPlace] = useState('');
-  const [editedStatus, setEditedStatus] = useState<
-    'CANCELED' | 'DELAYED' | 'ON TIME'
-  >('ON TIME');
+  const [editedStatus, setEditedStatus] = useState<ToastStatus>(
+    ToastStatus.ON_TIME
+  );
 
   const isLoading = isLoadingFutureToasts || isLoadingUsers;
 
@@ -73,7 +74,7 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const handleCancelEdit = () => {
-    setEditingToastId(null);
+    setEditingToastId('');
     resetEditState();
   };
 
@@ -90,7 +91,7 @@ export const AdminDashboard: React.FC = () => {
         },
       }).unwrap();
       toast.success('Toast updated successfully!');
-      setEditingToastId(null);
+      setEditingToastId('');
       refetchFutureToasts();
       resetEditState();
     } catch (err) {
@@ -104,7 +105,7 @@ export const AdminDashboard: React.FC = () => {
     setEditedDate('');
     setEditedTime('');
     setEditedPlace('');
-    setEditedStatus('ON TIME');
+    setEditedStatus(ToastStatus.ON_TIME);
   };
 
   if (isLoading) {
@@ -211,12 +212,7 @@ export const AdminDashboard: React.FC = () => {
                           <select
                             value={editedStatus}
                             onChange={(e) =>
-                              setEditedStatus(
-                                e.target.value as
-                                  | 'CANCELED'
-                                  | 'DELAYED'
-                                  | 'ON TIME'
-                              )
+                              setEditedStatus(e.target.value as ToastStatus)
                             }
                             className={styles.inlineInput}
                           >
@@ -272,3 +268,5 @@ export const AdminDashboard: React.FC = () => {
     </div>
   );
 };
+
+
