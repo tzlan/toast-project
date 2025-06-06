@@ -56,30 +56,45 @@ export const AdminEditUser: React.FC = () => {
   });
 
   const selectedUserIdValue = watch('selectedUserId');
-  const watchRole = watch('role');
+  // const watchRole = watch('role'); // Non utilisé, peut être supprimé
 
   useEffect(() => {
+    // Exécuter ce useEffect seulement quand les utilisateurs sont chargés et qu'il n'y a pas d'erreur
     if (!areUsersLoading && !isUsersError && users) {
       let userToLoad: User | undefined;
+      let targetUserId: string | undefined = undefined;
 
       if (isAdmin === false && currentUserId) {
+        // Si c'est un utilisateur simple, ciblez toujours son propre ID
+        targetUserId = currentUserId;
+        // On définit immédiatement la valeur du select pour l'utilisateur simple
         setValue('selectedUserId', currentUserId);
-        userToLoad = users.find((user) => user.id === currentUserId);
       } else if (selectedUserIdValue) {
-        userToLoad = users.find((user) => user.id === selectedUserIdValue);
+        // Si c'est un admin ou si un ID est déjà sélectionné, utilisez l'ID sélectionné
+        targetUserId = selectedUserIdValue;
       } else {
+        // Réinitialiser si aucun utilisateur n'est sélectionné et ce n'est pas un non-admin qui arrive
         reset();
         setSelectedButton(null);
         return;
       }
 
+      // Recherchez l'utilisateur ciblé
+      userToLoad = users.find((user) => user.id === targetUserId);
+
       if (userToLoad) {
         setValue('firstName', userToLoad.firstName || '');
         setValue('lastName', userToLoad.lastName || '');
+        // Assurez-vous que 'status' est bien le champ pour le rôle dans votre User type
         const roleUpperCase = (userToLoad.status?.toUpperCase() ||
           null) as UserFormInputs['role'];
         setValue('role', roleUpperCase);
         setSelectedButton(roleUpperCase);
+      } else if (isAdmin === false && currentUserId) {
+        // Si l'utilisateur simple n'est pas trouvé (ex: données pas encore disponibles),
+        // réinitialiser ou gérer l'état en attente
+        reset();
+        setSelectedButton(null);
       }
     }
   }, [
@@ -94,32 +109,43 @@ export const AdminEditUser: React.FC = () => {
   ]);
 
   const onSubmit: SubmitHandler<UserFormInputs> = async (data) => {
+    // Si l'utilisateur n'est pas admin, il ne peut modifier que lui-même
     if (isAdmin === false && data.selectedUserId !== currentUserId) {
-      toast.error("Not authorized to modify other users.");
+      toast.error('Non autorisé à modifier d\'autres utilisateurs.');
       return;
     }
 
+    // `selectedUserId` sera toujours défini pour les non-admins grâce à `setValue` dans `useEffect`
     if (!data.selectedUserId) {
-      toast.error('Please select a user.');
+      toast.error('Veuillez sélectionner un utilisateur.');
       return;
     }
 
+    // Le rôle n'est obligatoire que si c'est un admin ou si un rôle a été modifié
+    // Simplification de la logique de validation du rôle
     if (isAdmin && !data.role) {
-      toast.error('Please select a role.');
-      return;
+        toast.error('Veuillez sélectionner un rôle.');
+        return;
     }
 
+    // Le rôle pour un non-admin devrait déjà être prérempli et ne pas être modifiable.
+    // Cette validation peut être plus souple si le rôle est juste une valeur d'affichage pour l'utilisateur.
     if (isAdmin === false && !data.role) {
-      toast.error('Error: User role not defined.');
+      toast.error('Erreur : le rôle de l\'utilisateur n\'est pas défini.');
       return;
     }
 
     const updatePayload: Partial<User> = {
       firstName: data.firstName,
       lastName: data.lastName,
-      status: data.role,
+      // Le rôle n'est envoyé que si c'est un admin, ou si la valeur est significative
+      // Sinon, pour un simple user, on ne devrait pas laisser le frontend changer son rôle
+      // La ligne suivante sera problématique si un non-admin peut changer son rôle
+      // Mieux vaut ne pas inclure `status` dans le payload si `isAdmin` est `false`
+      status: isAdmin ? data.role : undefined, // N'envoyer le rôle que si l'admin est connecté
     };
 
+    // Si le mot de passe est fourni, l'inclure dans le payload
     if (data.password) {
       updatePayload.password = data.password;
     }
@@ -130,30 +156,33 @@ export const AdminEditUser: React.FC = () => {
         userData: updatePayload,
       }).unwrap();
 
-      toast.success('User updated! 🎉');
-      await refetchUsers();
+      toast.success('Utilisateur mis à jour ! 🎉');
+      await refetchUsers(); // Re-fetch les utilisateurs pour avoir les dernières données
 
-      reset();
-      setSelectedButton(null);
+      // Après la mise à jour, réinitialisez le formulaire et réchargez les données de l'utilisateur actuel
+      // C'est important pour un non-admin pour voir ses propres modifications
+      reset(); // Réinitialise tous les champs du formulaire
+      setSelectedButton(null); // Réinitialise l'état du bouton de rôle
 
-      if (isAdmin === false && currentUserId) {
-        setValue('selectedUserId', currentUserId);
-        const userToEditAfterUpdate = users?.find(
-          (user) => user.id === currentUserId
-        );
+      // Recharger les données de l'utilisateur juste après la mise à jour
+      // Cette partie peut être simplifiée car le `useEffect` se déclenchera avec `users` mis à jour par `refetchUsers`
+      // Mais pour s'assurer que les champs sont bien remplis immédiatement:
+      if (currentUserId) { // Pas besoin de vérifier isAdmin ici, c'est pour l'utilisateur actuel
+        const userToEditAfterUpdate = users?.find((u) => u.id === currentUserId);
         if (userToEditAfterUpdate) {
+          setValue('selectedUserId', currentUserId); // S'assurer que le select est bien positionné
           setValue('firstName', userToEditAfterUpdate.firstName || '');
           setValue('lastName', userToEditAfterUpdate.lastName || '');
-          const roleUpperCase = (userToEditAfterUpdate.status?.toUpperCase() ||
-            null) as UserFormInputs['role'];
+          const roleUpperCase = (userToEditAfterUpdate.status?.toUpperCase() || null) as UserFormInputs['role'];
           setValue('role', roleUpperCase);
           setSelectedButton(roleUpperCase);
         }
       }
+
     } catch (error: any) {
       const errorMessage =
-        error?.data?.message || 'Update failed.';
-      toast.error(`Error: ${errorMessage}`);
+        error?.data?.message || 'La mise à jour a échoué. Veuillez réessayer.';
+      toast.error(`Erreur : ${errorMessage}`);
     }
   };
 
@@ -162,6 +191,12 @@ export const AdminEditUser: React.FC = () => {
   };
 
   const handleButtonClick = (buttonType: UserFormInputs['role']) => {
+    // Si l'utilisateur n'est pas admin, il ne peut pas changer son rôle via les boutons
+    if (isAdmin === false) {
+      toast.info('Seuls les administrateurs peuvent modifier les rôles.');
+      return;
+    }
+
     if (selectedButton === buttonType) {
       setSelectedButton(null);
       setValue('role', null, { shouldValidate: true });
@@ -187,30 +222,28 @@ export const AdminEditUser: React.FC = () => {
         theme="light"
       />
       <div className={styles.container}>
-        <h1 className={styles.title}>Edit User ✍🏼</h1>
+        <h1 className={styles.title}>Modifier l'utilisateur ✍🏼</h1>
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <div className={styles.formGroup}>
             <label htmlFor="selectedUser" className={styles.label}>
-              Select user
+              Sélectionner un utilisateur
             </label>
-            {areUsersLoading && <p>Loading user</p>}
+            {areUsersLoading && <p>Chargement des utilisateurs...</p>}
             {isUsersError && (
-              <p className={styles.error}>
-                Error loading users.
-              </p>
+              <p className={styles.error}>Erreur lors du chargement des utilisateurs.</p>
             )}
             {!areUsersLoading && !isUsersError && (
               <select
                 id="selectedUser"
                 className={styles.input}
                 {...register('selectedUserId', {
-                  required: 'Select user',
+                  required: 'Veuillez sélectionner un utilisateur.',
                 })}
-                disabled={isAdmin === false}
+                disabled={isAdmin === false} // Désactive le select pour les non-admins
               >
                 {isAdmin ? (
                   <>
-                    <option value="">-- Select soldier --</option>
+                    <option value="">-- Sélectionner un soldat --</option>
                     {users?.map((user) => (
                       <option key={user.id} value={user.id}>
                         {user.firstName} {user.lastName} (ID: {user.soldierId})
@@ -218,6 +251,7 @@ export const AdminEditUser: React.FC = () => {
                     ))}
                   </>
                 ) : (
+                  // Pour les non-admins, afficher seulement leur propre option et la sélectionner par défaut
                   users
                     ?.filter((user) => user.id === currentUserId)
                     .map((user) => (
@@ -238,13 +272,13 @@ export const AdminEditUser: React.FC = () => {
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
               <label htmlFor="firstName" className={styles.label}>
-                First Name
+                Prénom
               </label>
               <input
                 type="text"
                 id="firstName"
                 className={styles.input}
-                {...register('firstName', { required: 'First name required' })}
+                {...register('firstName', { required: 'Le prénom est requis' })}
               />
               {errors.firstName && (
                 <span className={styles.error}>{errors.firstName.message}</span>
@@ -252,14 +286,14 @@ export const AdminEditUser: React.FC = () => {
             </div>
             <div className={styles.formGroup}>
               <label htmlFor="lastName" className={styles.label}>
-                Last Name
+                Nom
               </label>
               <input
                 type="text"
                 id="lastName"
                 className={styles.input}
                 {...register('lastName', {
-                  required: 'Last name required',
+                  required: 'Le nom est requis',
                 })}
               />
               {errors.lastName && (
@@ -270,7 +304,7 @@ export const AdminEditUser: React.FC = () => {
 
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>
-              Password
+              Mot de passe
             </label>
             <input
               type={showPassword ? 'text' : 'password'}
@@ -286,12 +320,12 @@ export const AdminEditUser: React.FC = () => {
             )}
           </div>
 
-          {isAdmin && (
+          {isAdmin && ( // Le groupe de boutons de rôle n'est visible que pour les admins
             <div className={styles.buttonGroup}>
               <input
                 type="hidden"
                 {...register('role', {
-                  required: 'Select status',
+                  required: 'Veuillez sélectionner un statut',
                 })}
               />
               <button
@@ -314,7 +348,7 @@ export const AdminEditUser: React.FC = () => {
                 }`}
                 onClick={() => handleButtonClick('CRIMINAL')}
               >
-                Criminal
+                Criminel
               </button>
               <button
                 type="button"
@@ -334,7 +368,7 @@ export const AdminEditUser: React.FC = () => {
             className={styles.button}
             disabled={isUpdatingUser || areUsersLoading}
           >
-            {isUpdatingUser ? 'Updating...' : 'Update'}
+            {isUpdatingUser ? 'Mise à jour...' : 'Mettre à jour'}
           </button>
         </form>
       </div>
