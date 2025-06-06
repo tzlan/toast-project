@@ -1,7 +1,10 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  NotFoundException,
+} from '@nestjs/common';
 import { User } from './entities/user.entity';
 import { InjectModel } from '@nestjs/sequelize';
-import { NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 
 @Injectable()
@@ -22,18 +25,17 @@ export class UsersService {
 
   async deleteUser(id: string): Promise<void> {
     const user = await this.userModel.findOne({ where: { id } });
-    user
-      ? user.destroy().then(() => {})
-      : (() => {
-          throw new NotFoundException(`User with ID ${id} not found`);
-        })();
+    if (!user) {
+      throw new NotFoundException(`Utilisateur avec l'ID ${id} non trouvé`);
+    }
+    await user.destroy();
   }
 
   async adminEditUser(id: string, updateUserDto: Partial<User>): Promise<User> {
     const user = await this.userModel.findOne({ where: { id } });
 
     if (!user) {
-      throw new NotFoundException(`User with this ID ${id} not found`);
+      throw new NotFoundException(`Utilisateur avec l'ID ${id} non trouvé`);
     }
     await user.update(updateUserDto);
     return user;
@@ -41,17 +43,32 @@ export class UsersService {
 
   async login(
     soldierId: number,
-    password: string
-  ): Promise<{ success: boolean; user: User }> {
-    const user = await this.userModel.findOne({ where: { soldierId } });
+    passwordAttempt: string
+  ): Promise<{ success: boolean; user: Partial<User> }> {
+    const user = await this.userModel.findOne({ where: { soldierId, deletedAt: null } });
 
     if (!user) {
-      throw new UnauthorizedException('User not found');
-    }
-    if (user.password !== password) {
-      throw new UnauthorizedException('Password is wrong');
+      throw new UnauthorizedException('Identifiant ou mot de passe incorrect.');
     }
 
-    return { success: true, user };
+    if (user.password !== passwordAttempt) {
+      throw new UnauthorizedException('Identifiant ou mot de passe incorrect.');
+    }
+
+    const userPlainObject = user.get({ plain: true });
+
+    const {
+      password,
+      deletedAt,
+      createdAt,
+      updatedAt,
+      isStatusForced,
+      ...userWithoutSensitiveData
+    } = userPlainObject;
+
+    return {
+      success: true,
+      user: userWithoutSensitiveData,
+    };
   }
 }

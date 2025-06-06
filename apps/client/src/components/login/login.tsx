@@ -4,6 +4,8 @@ import styles from './login.module.css';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useLoginMutation } from '../../store/api/users.api';
 import { AxiosError } from 'axios';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../store/api/auth/auth.slice';
 
 export const Login = () => {
   const [idSoldier, setIdSoldier] = useState('');
@@ -12,7 +14,8 @@ export const Login = () => {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const navigate = useNavigate();
-  const [login, { isLoading, isError, error, isSuccess }] = useLoginMutation();
+  const dispatch = useDispatch();
+  const [login, { isLoading, error, isSuccess }] = useLoginMutation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,20 +26,20 @@ export const Login = () => {
         soldierId: parseInt(idSoldier),
         password,
       }).unwrap();
-      if (result.success) { navigate('/dashboard');} 
-      else {setErrorMessage('Login failed. Please check your credentials.');}
-    } catch (err) {
 
-      if (isError) {
-        const apiError = error as AxiosError;
-        if (apiError.response && apiError.response.data) {
-          setErrorMessage(
-            (apiError.response.data as { message: string }).message ||
-              'An unexpected error occurred.'
-          );
-        } else {
-          setErrorMessage('Could not connect to the server. Please try again.');
-        }
+      if (result && result.user) {
+        dispatch(setUser(result.user));
+        navigate('/dashboard');
+      } else {
+        setErrorMessage('Login failed. Invalid server response.');
+      }
+    } catch (err) {
+      const apiError = err as AxiosError<{ message?: string; error?: string; statusCode?: number }>;
+      
+      if (apiError.response && apiError.response.data) {
+        setErrorMessage(apiError.response.data.message || 'An unexpected error occurred.');
+      } else if (apiError.request) {
+        setErrorMessage('Unable to connect to server. Please check your connection.');
       } else {
         setErrorMessage('An unknown error occurred during login.');
       }
@@ -84,18 +87,16 @@ export const Login = () => {
 
         {isLoading && <p className={styles.loadingMessage}>Logging in...</p>}
         {errorMessage && <p className={styles.errorMessage}>{errorMessage}</p>}
-        {isSuccess && !errorMessage && (
-          <p className={styles.successMessage}>
-            Login successful! Redirecting...
-          </p>
+        {isSuccess && !errorMessage && !isLoading && (
+          <p className={styles.successMessage}>Redirecting...</p>
         )}
 
         <button type="submit" className={styles.button} disabled={isLoading}>
-          {isLoading ? 'Logging in...' : 'Login'}
+          {isLoading ? 'Loading' : 'Login'}
         </button>
 
         <div className={styles.createAccount}>
-          <Link to="/user-registration">Create account</Link>
+          <Link to="/user-registration">Create an account</Link>
         </div>
       </form>
     </div>

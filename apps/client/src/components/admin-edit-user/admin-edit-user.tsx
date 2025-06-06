@@ -5,7 +5,8 @@ import { Navigation } from '../navigation/navigation';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
 import {
   useAdminEditUserMutation,
   useGetUsersQuery,
@@ -17,13 +18,16 @@ type UserFormInputs = {
   firstName: string;
   lastName: string;
   password?: string;
-  role: 'PERSONA' | 'CRIMINAL' | 'ADMIN' | null;
+  role: 'PERSONA_NON_GRATA' | 'CRIMINAL' | 'ADMIN' | null;
 };
 
 export const AdminEditUser: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [selectedButton, setSelectedButton] =
     useState<UserFormInputs['role']>(null);
+
+  const currentUserId = useSelector((state: RootState) => state.auth.user?.id);
+  const isAdmin = useSelector((state: RootState) => state.auth.user?.isAdmin);
 
   const {
     data: users,
@@ -52,53 +56,65 @@ export const AdminEditUser: React.FC = () => {
   });
 
   const selectedUserIdValue = watch('selectedUserId');
+  const watchRole = watch('role');
 
   useEffect(() => {
-    if (selectedUserIdValue && users) {
-      const userToEdit = users.find((user) => user.id === selectedUserIdValue);
-      if (userToEdit) {
-        setValue('firstName', userToEdit.firstName);
-        setValue('lastName', userToEdit.lastName);
-        // Conversion du rôle en majuscules si nécessaire
-        const roleUpperCase =
-          userToEdit.role?.toUpperCase() as UserFormInputs['role'];
+    if (!areUsersLoading && !isUsersError && users) {
+      let userToLoad: User | undefined;
+
+      if (isAdmin === false && currentUserId) {
+        setValue('selectedUserId', currentUserId);
+        userToLoad = users.find((user) => user.id === currentUserId);
+      } else if (selectedUserIdValue) {
+        userToLoad = users.find((user) => user.id === selectedUserIdValue);
+      } else {
+        reset();
+        setSelectedButton(null);
+        return;
+      }
+
+      if (userToLoad) {
+        setValue('firstName', userToLoad.firstName || '');
+        setValue('lastName', userToLoad.lastName || '');
+        const roleUpperCase = (userToLoad.status?.toUpperCase() ||
+          null) as UserFormInputs['role'];
         setValue('role', roleUpperCase);
         setSelectedButton(roleUpperCase);
       }
-    } else {
-      reset({
-        selectedUserId: '',
-        firstName: '',
-        lastName: '',
-        password: '',
-        role: null,
-      });
-      setSelectedButton(null);
     }
-  }, [selectedUserIdValue, users, setValue, reset]);
+  }, [
+    selectedUserIdValue,
+    users,
+    setValue,
+    reset,
+    currentUserId,
+    isAdmin,
+    areUsersLoading,
+    isUsersError,
+  ]);
 
   const onSubmit: SubmitHandler<UserFormInputs> = async (data) => {
-    console.log('🔍 Form data submitted:', data);
-
-    if (!data.selectedUserId) {
-      toast.error('Please select a user to modify.');
+    if (isAdmin === false && data.selectedUserId !== currentUserId) {
+      toast.error("Not authorized to modify other users.");
       return;
     }
-    if (!data.role) {
+
+    if (!data.selectedUserId) {
+      toast.error('Please select a user.');
+      return;
+    }
+
+    if (isAdmin && !data.role) {
       toast.error('Please select a role.');
       return;
     }
 
-    const selectedUser = users?.find((user) => user.id === data.selectedUserId);
-    console.log('👤 Selected user:', selectedUser);
-
-    if (!selectedUser) {
-      toast.error("The selected user's data was not found.");
+    if (isAdmin === false && !data.role) {
+      toast.error('Error: User role not defined.');
       return;
     }
 
     const updatePayload: Partial<User> = {
-      soldierId: selectedUser.soldierId,
       firstName: data.firstName,
       lastName: data.lastName,
       status: data.role,
@@ -108,26 +124,35 @@ export const AdminEditUser: React.FC = () => {
       updatePayload.password = data.password;
     }
 
-    console.log('📦 Update payload being sent:', updatePayload);
-    console.log('🎯 Target user ID:', data.selectedUserId);
-
     try {
-      toast.success('User updated successfully! 🎉');
+      await adminEditUser({
+        id: data.selectedUserId,
+        userData: updatePayload,
+      }).unwrap();
 
+      toast.success('User updated! 🎉');
       await refetchUsers();
-
-      setTimeout(() => {
-        const updatedUser = users?.find((u) => u.id === data.selectedUserId);
-        console.log('🔄 User after refetch:', updatedUser);
-      }, 1000);
 
       reset();
       setSelectedButton(null);
+
+      if (isAdmin === false && currentUserId) {
+        setValue('selectedUserId', currentUserId);
+        const userToEditAfterUpdate = users?.find(
+          (user) => user.id === currentUserId
+        );
+        if (userToEditAfterUpdate) {
+          setValue('firstName', userToEditAfterUpdate.firstName || '');
+          setValue('lastName', userToEditAfterUpdate.lastName || '');
+          const roleUpperCase = (userToEditAfterUpdate.status?.toUpperCase() ||
+            null) as UserFormInputs['role'];
+          setValue('role', roleUpperCase);
+          setSelectedButton(roleUpperCase);
+        }
+      }
     } catch (error: any) {
-      console.error('❌ Error while updating user:', error);
-      console.error('❌ Error details:', error?.data);
       const errorMessage =
-        error?.data?.message || 'Update failed. Please try again.';
+        error?.data?.message || 'Update failed.';
       toast.error(`Error: ${errorMessage}`);
     }
   };
@@ -166,26 +191,41 @@ export const AdminEditUser: React.FC = () => {
         <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
           <div className={styles.formGroup}>
             <label htmlFor="selectedUser" className={styles.label}>
-              Select a user
+              Select user
             </label>
-            {areUsersLoading && <p>Loading users...</p>}
+            {areUsersLoading && <p>Loading user</p>}
             {isUsersError && (
-              <p className={styles.error}>Error loading users.</p>
+              <p className={styles.error}>
+                Error loading users.
+              </p>
             )}
             {!areUsersLoading && !isUsersError && (
               <select
                 id="selectedUser"
                 className={styles.input}
                 {...register('selectedUserId', {
-                  required: 'Please select a user.',
+                  required: 'Select user',
                 })}
+                disabled={isAdmin === false}
               >
-                <option value="">-- Select a soldier --</option>
-                {users?.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.firstName} {user.lastName} (ID: {user.soldierId})
-                  </option>
-                ))}
+                {isAdmin ? (
+                  <>
+                    <option value="">-- Select soldier --</option>
+                    {users?.map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.firstName} {user.lastName} (ID: {user.soldierId})
+                      </option>
+                    ))}
+                  </>
+                ) : (
+                  users
+                    ?.filter((user) => user.id === currentUserId)
+                    .map((user) => (
+                      <option key={user.id} value={user.id}>
+                        {user.firstName} {user.lastName} (ID: {user.soldierId})
+                      </option>
+                    ))
+                )}
               </select>
             )}
             {errors.selectedUserId && (
@@ -194,6 +234,7 @@ export const AdminEditUser: React.FC = () => {
               </span>
             )}
           </div>
+
           <div className={styles.formRow}>
             <div className={styles.formGroup}>
               <label htmlFor="firstName" className={styles.label}>
@@ -203,15 +244,12 @@ export const AdminEditUser: React.FC = () => {
                 type="text"
                 id="firstName"
                 className={styles.input}
-                {...register('firstName', {
-                  required: 'First name is required',
-                })}
+                {...register('firstName', { required: 'First name required' })}
               />
               {errors.firstName && (
                 <span className={styles.error}>{errors.firstName.message}</span>
               )}
             </div>
-
             <div className={styles.formGroup}>
               <label htmlFor="lastName" className={styles.label}>
                 Last Name
@@ -221,7 +259,7 @@ export const AdminEditUser: React.FC = () => {
                 id="lastName"
                 className={styles.input}
                 {...register('lastName', {
-                  required: 'Last name is required',
+                  required: 'Last name required',
                 })}
               />
               {errors.lastName && (
@@ -229,6 +267,7 @@ export const AdminEditUser: React.FC = () => {
               )}
             </div>
           </div>
+
           <div className={styles.formGroup}>
             <label htmlFor="password" className={styles.label}>
               Password
@@ -247,44 +286,46 @@ export const AdminEditUser: React.FC = () => {
             )}
           </div>
 
-          <div className={styles.buttonGroup}>
-            <input
-              type="hidden"
-              {...register('role', { required: 'Please select a status' })}
-            />
-            <button
-              type="button"
-              className={`${styles.buttonAdmin} ${
-                selectedButton === 'PERSONA'
-                  ? styles.buttonGray
-                  : styles.buttonRed
-              }`}
-              onClick={() => handleButtonClick('PERSONA')}
-            >
-              Persona
-            </button>
-
-            <button
-              type="button"
-              className={`${styles.buttonAdmin} ${
-                selectedButton === 'CRIMINAL'
-                  ? styles.buttonGray
-                  : styles.buttonYellow
-              }`}
-              onClick={() => handleButtonClick('CRIMINAL')}
-            >
-              Criminal
-            </button>
-
-            <button
-              type="button"
-              className={`${styles.buttonAdmin} ${styles.buttonOrange}`}
-              onClick={() => handleButtonClick('ADMIN')}
-            >
-              Admin
-            </button>
-          </div>
-          {errors.role && (
+          {isAdmin && (
+            <div className={styles.buttonGroup}>
+              <input
+                type="hidden"
+                {...register('role', {
+                  required: 'Select status',
+                })}
+              />
+              <button
+                type="button"
+                className={`${styles.buttonAdmin} ${
+                  selectedButton === 'PERSONA_NON_GRATA'
+                    ? styles.buttonGray
+                    : styles.buttonRed
+                }`}
+                onClick={() => handleButtonClick('PERSONA_NON_GRATA')}
+              >
+                Persona
+              </button>
+              <button
+                type="button"
+                className={`${styles.buttonAdmin} ${
+                  selectedButton === 'CRIMINAL'
+                    ? styles.buttonGray
+                    : styles.buttonYellow
+                }`}
+                onClick={() => handleButtonClick('CRIMINAL')}
+              >
+                Criminal
+              </button>
+              <button
+                type="button"
+                className={`${styles.buttonAdmin} ${styles.buttonOrange}`}
+                onClick={() => handleButtonClick('ADMIN')}
+              >
+                Admin
+              </button>
+            </div>
+          )}
+          {isAdmin && errors.role && (
             <span className={styles.error}>{errors.role.message}</span>
           )}
 

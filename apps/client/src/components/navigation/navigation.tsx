@@ -1,12 +1,26 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './navigation.module.css';
 import {
   NavigationMenu,
   NavigationMenuItem,
   NavigationMenuList,
 } from '../navigation-menu';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from '../../store';
+import { logout } from '../../store/api/auth/auth.slice';
 
 export const Navigation: React.FC = () => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/login');
+  };
+
   return (
     <>
       <div className={styles.nav}>
@@ -22,12 +36,6 @@ export const Navigation: React.FC = () => {
                 Past Toast
               </NavLink>
             </NavigationMenuItem>
-            <NavigationMenuItem className={styles.navItem}>
-              <NavLink to="/login" className={styles.navLink}>
-                Login
-              </NavLink>
-            </NavigationMenuItem>
-
 
             <NavigationMenuItem className={styles.navItem}>
               <NavLink to="/dashboard" className={styles.navLink}>
@@ -50,6 +58,22 @@ export const Navigation: React.FC = () => {
                 Admin DashBoard
               </NavLink>
             </NavigationMenuItem>
+
+            <div style={{ marginLeft: 'auto' }}>
+              {isAuthenticated ? (
+                <NavigationMenuItem className={styles.navItem}>
+                  <button onClick={handleLogout} className={styles.navLink}>
+                    Logout
+                  </button>
+                </NavigationMenuItem>
+              ) : (
+                <NavigationMenuItem className={styles.navItem}>
+                  <NavLink to="/login" className={styles.navLink}>
+                    Login
+                  </NavLink>
+                </NavigationMenuItem>
+              )}
+            </div>
           </NavigationMenuList>
         </NavigationMenu>
       </div>
