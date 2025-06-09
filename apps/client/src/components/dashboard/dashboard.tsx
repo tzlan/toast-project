@@ -54,6 +54,7 @@ const renderTableRows = (toasts: Toast[], users: User[]) => {
         <td>{userName}</td>
         <td>{formatDate(toast.date)}</td>
         <td>{toast.description}</td>
+        {/* The class is applied here for the status cell */}
         <td className={statusClassName}>{toast.toastStatus}</td>
       </tr>
     );

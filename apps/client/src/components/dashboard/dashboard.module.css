@@ -49,7 +49,7 @@
   color: white;
   border: 0rem solid;
   text-align: center;
-  background: var(--gray-for-cellules-tab);
+  background-color: var(--gray-for-cellules-tab);
   border-radius: 0.5rem;
 }
 
@@ -100,17 +100,49 @@
   transition: background 0.3s ease;
 }
 
-.statusOnTime {
-  color: green;
+.tab td.statusOnTime {
+  background-color: #0c6621;
+  color: #fcfffd;
+  padding: 6px 12px;
+  border-radius: 5px;
   font-weight: bold;
+  text-align: center;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 80px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.statusCanceled {
-  color: red;
+.tab td.statusCanceled {
+  background-color: #ae0715;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 5px;
   font-weight: bold;
+  text-align: center;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 80px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.statusDelayed {
-  color: orange;
+.tab td.statusDelayed {
+  background-color: #e28e0e;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 5px;
   font-weight: bold;
+  text-align: center;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 80px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tab td {
+  vertical-align: middle;
+  padding: 8px;
 }
