@@ -8,10 +8,13 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+
 import { ToastsService } from './toasts.service';
+
 import { PersonalRecordNotFoundException } from './exceptions/personal-record-not-found.exception';
 
 import { Toast } from './entities/toast.entity';
+
 import { CreateToastDto } from './dto/create-toast.dto';
 
 @Controller('toasts')
@@ -36,6 +39,7 @@ export class ToastsController {
   @Put(':id')
   async adminEditToast(
     @Param('id') id: string,
+
     @Body() toastData: Partial<Toast>
   ): Promise<Toast> {
     return this.toastsService.adminEditToast(id, toastData);
@@ -60,6 +64,7 @@ export class ToastsController {
   async getAllTimeRecord(): Promise<{ count: number }> {
     try {
       const count = await this.toastsService.getAllTimeRecord();
+
       return { count };
     } catch (error) {
       throw new NotFoundException(
@@ -68,7 +73,7 @@ export class ToastsController {
     }
   }
 
-  @Get('past') 
+  @Get('past')
   async findPast(): Promise<Toast[]> {
     return this.toastsService.findPastToasts();
   }
@@ -82,6 +87,7 @@ export class ToastsController {
   async getCurrentRecord(): Promise<{ toastCountInPeriod: number }> {
     try {
       const toastCountInPeriod = await this.toastsService.getCurrentRecord();
+
       return { toastCountInPeriod };
     } catch (error) {
       throw new NotFoundException(

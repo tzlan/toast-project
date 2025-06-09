@@ -20,6 +20,19 @@ const formatDate = (dateString: string) => {
   return date.toLocaleString('en', options);
 };
 
+const getStatusClassName = (status: string) => {
+  switch (status.toUpperCase()) {
+    case 'ON TIME':
+      return styles.statusOnTime;
+    case 'CANCELED':
+      return styles.statusCanceled;
+    case 'DELAYED':
+      return styles.statusDelayed;
+    default:
+      return '';
+  }
+};
+
 const renderTableRows = (toasts: Toast[], users: User[]) => {
   if (!toasts || toasts.length === 0) {
     return null;
@@ -34,12 +47,14 @@ const renderTableRows = (toasts: Toast[], users: User[]) => {
       ? `${user.firstName} ${user.lastName}`
       : 'Unknown User';
 
+    const statusClassName = getStatusClassName(toast.toastStatus);
+
     return (
       <tr key={toast.id} className={styles.selectedRow}>
         <td>{userName}</td>
         <td>{formatDate(toast.date)}</td>
         <td>{toast.description}</td>
-        <td>{toast.toastStatus}</td>
+        <td className={statusClassName}>{toast.toastStatus}</td>
       </tr>
     );
   });
@@ -56,8 +71,8 @@ export const Dashboard: React.FC = () => {
       <div>
         <Navigation />
         <div className={styles.container}>
-          <h1 className={styles.title}>Loading ... ⏳</h1>
-          <p>Wait please</p>
+          <h1 className={styles.title}>Loading... ⏳</h1>
+          <p>Please wait</p>
         </div>
       </div>
     );
@@ -67,7 +82,7 @@ export const Dashboard: React.FC = () => {
     <div>
       <Navigation />
       <div className={styles.container}>
-        <h1 className={styles.title}>🍷 Welcome user of Golden Toast 🍪</h1>
+        <h1 className={styles.title}>🍷 Welcome to Golden Toast 🍪</h1>
         <div className={styles.form}>
           <table className={styles.tab}>
             <thead>
@@ -81,7 +96,7 @@ export const Dashboard: React.FC = () => {
             <tbody>{renderTableRows(toasts || [], users || [])}</tbody>
           </table>
           {(!toasts || toasts.length === 0) && (
-            <p className={styles.noData}>0 toast found</p>
+            <p className={styles.noData}>No toasts found</p>
           )}
         </div>
       </div>

@@ -13,6 +13,9 @@ export const Navigation: React.FC = () => {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
+
+  const isAdmin = useSelector((state: RootState) => state.auth.isAdmin);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -53,11 +56,15 @@ export const Navigation: React.FC = () => {
                 Record Page
               </NavLink>
             </NavigationMenuItem>
-            <NavigationMenuItem className={styles.navItem}>
-              <NavLink to="/admin-dashboard" className={styles.navLink}>
-                Admin DashBoard
-              </NavLink>
-            </NavigationMenuItem>
+
+  
+            {isAdmin && (
+              <NavigationMenuItem className={styles.navItem}>
+                <NavLink to="/admin-dashboard" className={styles.navLink}>
+                  Admin DashBoard
+                </NavLink>
+              </NavigationMenuItem>
+            )}
 
             <div style={{ marginLeft: 'auto' }}>
               {isAuthenticated ? (

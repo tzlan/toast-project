@@ -1,15 +1,22 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { InjectModel } from '@nestjs/sequelize';
+
 import { Toast } from './entities/toast.entity';
+
 import { User } from '../users';
+
 import { ToastDto } from './dto/toast.dto';
+
 import { fn, literal, where, Op, col } from 'sequelize';
+
 import { CreateToastDto } from './dto/create-toast.dto';
 
 interface PeriodRecord {
   year?: number;
+
   period?: string;
+
   count?: number;
 }
 
@@ -24,39 +31,49 @@ export class ToastsService {
     const toasts = await this.toastModel.findAll({
       include: [{ model: User, as: 'user' }],
     });
+
     return toasts;
   }
 
   async findFutureToasts(): Promise<Toast[]> {
     const now = new Date();
+
     const toasts = await this.toastModel.findAll({
       where: {
         date: {
           [Op.gte]: now,
         },
       },
+
       include: [{ model: User, as: 'user' }],
+
       order: [['date', 'ASC']],
     });
+
     return toasts;
   }
 
   async findPastToasts(): Promise<Toast[]> {
     const now = new Date();
+
     const toasts = await this.toastModel.findAll({
       where: {
         date: {
           [Op.lt]: now,
         },
       },
+
       include: [{ model: User, as: 'user' }],
+
       order: [['date', 'DESC']],
     });
+
     return toasts;
   }
 
   async createToast(toastData: CreateToastDto): Promise<Toast> {
     const toast = await this.toastModel.create(toastData);
+
     return toast;
   }
 
@@ -72,6 +89,7 @@ export class ToastsService {
 
   async adminEditToast(
     id: string,
+
     updateToastDto: Partial<ToastDto>
   ): Promise<Toast> {
     const toast = await this.toastModel.findOne({ where: { id } });
@@ -79,12 +97,15 @@ export class ToastsService {
     if (!toast) {
       throw new NotFoundException(`Toast with this ID ${id} not found`);
     }
+
     await toast.update(updateToastDto);
+
     return toast;
   }
 
   async getPersonalRecord(userId: string): Promise<number> {
     const inputDate = new Date();
+
     const year = inputDate.getFullYear();
 
     let startPhase, endPhase;
@@ -93,15 +114,18 @@ export class ToastsService {
 
     if (month >= 7 && month <= 12) {
       startPhase = new Date(`${year}-07-01T00:00:00Z`);
+
       endPhase = new Date(`${year}-12-31T23:59:59Z`);
     } else {
       startPhase = new Date(`${year}-01-01T00:00:00Z`);
+
       endPhase = new Date(`${year}-06-30T23:59:59Z`);
     }
 
     const count = await this.toastModel.count({
       where: {
         userId,
+
         date: {
           [Op.between]: [startPhase, endPhase],
         },
@@ -121,7 +145,9 @@ export class ToastsService {
 
   async getCurrentRecord(): Promise<number> {
     const now = new Date();
+
     const currentYear = now.getFullYear();
+
     const currentMonth = now.getMonth() + 1;
 
     const dateMax7Mounth = currentMonth >= 7;
@@ -130,6 +156,7 @@ export class ToastsService {
       where: {
         [Op.and]: [
           where(fn('EXTRACT', literal('YEAR FROM "date"')), currentYear),
+
           dateMax7Mounth
             ? where(fn('EXTRACT', literal('MONTH FROM "date"')), {
                 [Op.gte]: 7,
@@ -148,20 +175,32 @@ export class ToastsService {
     const results: PeriodRecord[] = await this.toastModel.findAll({
       attributes: [
         [fn('EXTRACT', literal('YEAR FROM "date"')), 'year'],
+
         [
           literal(`
-            CASE 
-              WHEN EXTRACT(MONTH FROM "date") >= 7 THEN 'H2'
-              ELSE 'H1'
-            END
-          `),
+
+                CASE
+
+                WHEN EXTRACT(MONTH FROM "date") >= 7 THEN 'H2'
+
+                ELSE 'H1'
+
+                END
+
+      `), 
+
           'period',
         ],
+
         [fn('COUNT', col('id')), 'count'],
       ],
+
       group: ['year', 'period'],
+
       order: [[literal('count'), 'DESC']],
+
       limit: 1,
+
       raw: true,
     });
 

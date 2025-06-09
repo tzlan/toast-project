@@ -12,11 +12,13 @@ export interface UserData {
 type AuthState = {
   user: UserData | null;
   isAuthenticated: boolean;
+  isAdmin: boolean;
 };
 
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
+  isAdmin: false,
 };
 
 const authSlice = createSlice({
@@ -26,11 +28,14 @@ const authSlice = createSlice({
     setUser: (state, action: PayloadAction<UserData>) => {
       state.user = action.payload;
       state.isAuthenticated = true;
+
+      state.isAdmin = action.payload.isAdmin === true;
     },
 
     logout: (state) => {
       state.user = null;
       state.isAuthenticated = false;
+      state.isAdmin = false;
     },
   },
 });

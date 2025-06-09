@@ -99,3 +99,18 @@
   cursor: pointer;
   transition: background 0.3s ease;
 }
+
+.statusOnTime {
+  color: green;
+  font-weight: bold;
+}
+
+.statusCanceled {
+  color: red;
+  font-weight: bold;
+}
+
+.statusDelayed {
+  color: orange;
+  font-weight: bold;
+}
